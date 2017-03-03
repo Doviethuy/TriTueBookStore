@@ -39,7 +39,7 @@ public class UserDAO {
 
 	public void deleteUser(String userName) {
 		Session session = this.sessionFactory.getCurrentSession();
-		User user = (User) session.load(User.class, new String(userName));
+		User user = (User) session.get(User.class, new String(userName));
 		if (user != null) {
 			session.delete(user);
 		}

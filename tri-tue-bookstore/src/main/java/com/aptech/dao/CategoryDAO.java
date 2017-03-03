@@ -37,7 +37,7 @@ public class CategoryDAO {
 	
 	public void deleteCategory(int cateId){
 		Session session = this.sessionFactory.getCurrentSession();
-		Category category = (Category) session.load(Category.class, new Integer(cateId));
+		Category category = (Category) session.get(Category.class, new Integer(cateId));
 		if(category!=null){
 			session.delete(category);
 		}

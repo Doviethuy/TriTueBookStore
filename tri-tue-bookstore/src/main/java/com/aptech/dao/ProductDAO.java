@@ -37,7 +37,7 @@ public class ProductDAO {
 	
 	public void deleteProduct(int proId){
 		Session session = this.sessionFactory.getCurrentSession();
-		Product product = (Product) session.load(Product.class, new Integer(proId));
+		Product product = (Product) session.get(Product.class, new Integer(proId));
 		if(product!=null){
 			session.delete(product);
 		}

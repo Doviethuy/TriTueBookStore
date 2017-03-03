@@ -9,28 +9,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.aptech.service.UserService;
-import com.aptech.util.Constant;
 import com.aptech.util.PermissionUtil;
 
 @Controller
-public class HomeController {
+public class StaffController {
 	@Autowired
 	UserService userService;
 
-	@RequestMapping("/")
+	@RequestMapping("/staff/ban-hang")
 	public String index(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		if (PermissionUtil.checkLogin(session)) {
-			byte role = Byte.valueOf(session.getAttribute(Constant.ROLE).toString());
-			if (role == Constant.ADMIN_ROLE) {
-				return "redirect:/admin/report/doanh-thu";
-			} else if (role == Constant.STAFF_ROLE) {
-				return "redirect:/staff/ban-hang";	
-			} else {
-				return "login/view";
-			}
+			return "staff/view-ban-hang";
 		} else {
-			return "login/view";
+			return "redirect:/";
 		}
 	}
 }

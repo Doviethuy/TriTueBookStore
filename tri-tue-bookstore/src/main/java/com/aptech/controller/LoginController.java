@@ -26,13 +26,9 @@ public class LoginController {
 				HttpSession session = request.getSession();
 				session.setAttribute(Constant.USERNAME, user.getUserName());
 				session.setAttribute(Constant.ROLE, user.getRole());
-				return "all-user";
-			} else {
-				return "redirect:/";
 			}
-		} else {
-			return "redirect:/";
 		}
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)

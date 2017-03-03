@@ -37,7 +37,7 @@ public class InvoiceDAO {
 	
 	public void deleteInvoice(int ivId){
 		Session session = this.sessionFactory.getCurrentSession();
-		Invoice invoice = (Invoice) session.load(Invoice.class, new Integer(ivId));
+		Invoice invoice = (Invoice) session.get(Invoice.class, new Integer(ivId));
 		if(invoice!=null){
 			session.delete(invoice);
 		}
