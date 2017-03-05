@@ -17,19 +17,22 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
-	<!-- 	cau hinh database -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- one of the properties available; the maximum file size in bytes -->
+		<beans:property name="maxUploadSize" value="10000000" />
+	</beans:bean>
+
+	<!-- cau hinh database -->
 	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<beans:property name="url"
-			value="jdbc:mysql://localhost:3306/trituebook" />
+			value="jdbc:mysql://localhost:3306/bookstore" />
 		<beans:property name="username" value="root" />
-		<beans:property name="password" value="" />
+		<beans:property name="password" value="123456" />
 	</beans:bean>
 
-	<!-- 	cau hinh model 
-			vi du: user
-	-->
+	<!-- cau hinh model vi du: user -->
 	<beans:bean id="hibernate4AnnotatedSessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<beans:property name="dataSource" ref="dataSource" />

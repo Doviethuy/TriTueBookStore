@@ -17,6 +17,9 @@ import com.aptech.model.Category;
 import com.aptech.service.CategoryService;
 import com.aptech.service.UserService;
 import com.aptech.util.PermissionUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.PortalUtil;
 
 @Controller
 public class AdminController {
@@ -55,8 +58,13 @@ public class AdminController {
 		}
 	}
 	
-	@RequestMapping("/admin/add-product")
-	public String addProduct(Model model, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value="/admin/add-product", method = RequestMethod.POST)
+	public String addProduct(@RequestParam("proName")String proName, @RequestParam("cateId")long cateId, @RequestParam("price") long price,@RequestParam("description") String description, HttpServletRequest request, HttpServletResponse response) {
+			
+		System.out.println("proName:"+proName);
+		System.out.println("cateId:"+cateId);
+		System.out.println("price:"+price);
+		System.out.println("description"+description);
 		return "";
 	}
 }

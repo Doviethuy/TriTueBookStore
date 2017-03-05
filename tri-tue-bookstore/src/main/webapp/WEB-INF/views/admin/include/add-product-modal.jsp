@@ -9,7 +9,7 @@
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">×</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+					<h4 class="modal-title" id="myModalLabel">Thêm sản phẩm</h4>
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
@@ -48,7 +48,6 @@
 							<input id="img" name="img" class="form-control col-md-7 col-xs-12" type="file" name="middle-name">
 						</div>
 					</div>
-					<div class="ln_solid"></div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
