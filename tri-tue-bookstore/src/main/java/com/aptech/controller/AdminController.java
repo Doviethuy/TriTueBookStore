@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.aptech.model.Category;
+import com.aptech.model.User;
 import com.aptech.service.CategoryService;
 import com.aptech.service.UserService;
 import com.aptech.util.PermissionUtil;
@@ -58,6 +59,22 @@ public class AdminController {
 		}
 	}
 	
+	@RequestMapping("/admin/nhan-vien")
+	public String adminUser(Model model, HttpServletRequest request){
+		HttpSession session = request.getSession();
+		if(PermissionUtil.checkLogin(session)){
+			if(PermissionUtil.checkAdminRole(session)){
+				ArrayList<User> allUser = userService.getAllUser();
+				request.setAttribute("lstUser", allUser);
+				return "admin/view-nhan-vien";
+			} else {
+				return "redirect:/";
+			}
+		} else {
+			return "redirect:/";
+		}
+	}
+	
 	@RequestMapping(value="/admin/add-product", method = RequestMethod.POST)
 	public String addProduct(@RequestParam("proName")String proName, @RequestParam("cateId")long cateId, @RequestParam("price") long price,@RequestParam("description") String description, HttpServletRequest request, HttpServletResponse response) {
 			
@@ -65,6 +82,13 @@ public class AdminController {
 		System.out.println("cateId:"+cateId);
 		System.out.println("price:"+price);
 		System.out.println("description"+description);
+		return "";
+	}
+	
+	@RequestMapping(value="/admin/add-user", method = RequestMethod.POST)
+	public String addUser(@RequestParam("userName")String userName,@RequestParam("passWord")String passWord, HttpServletRequest request, HttpServletResponse response){
+		System.out.println("userName"+userName);
+		System.out.println("passWord"+passWord);
 		return "";
 	}
 }
