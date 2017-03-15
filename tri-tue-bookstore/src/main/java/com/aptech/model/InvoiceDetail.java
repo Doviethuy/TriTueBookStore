@@ -14,7 +14,6 @@ public class InvoiceDetail {
 	@Column(name="ivid")
 	private long ivId;
 	
-	@Id
 	@Column(name="proid")
 	private long proId;
 	

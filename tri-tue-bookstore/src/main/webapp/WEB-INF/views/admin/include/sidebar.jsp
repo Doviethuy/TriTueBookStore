@@ -6,22 +6,12 @@
 	<div class="menu_section">
 		<h3>General</h3>
 		<ul class="nav side-menu">
-			<li><a><i class="fa fa-bar-chart-o"></i> Thống kê <span
+			<li><a><i class="fa fa-bar-chart-o"></i> Admin <span
 					class="fa fa-chevron-down"></span></a>
 				<ul class="nav child_menu">
-					<li><a href="${ctxPath}/admin/report/doanh-thu">Thống kê
-							doanh thu</a></li>
-					<li><a href="${ctxPath}/admin/report/san-pham">Thống kê
-							sản phẩm</a></li>
-					<li><a href="${ctxPath}/admin/report/nhan-vien">Thống kê
-							nhân viên</a></li>
-				</ul></li>
-			<li><a><i class="fa fa-desktop"></i> Quản lý <span
-					class="fa fa-chevron-down"></span></a>
-				<ul class="nav child_menu">
-					<li><a href="${ctxPath}/admin/san-pham">Sản phẩm</a></li>
-					<li><a href="${ctxPath}/admin/hoa-don">Hoá đơn</a></li>
-					<li><a href="${ctxPath}/admin/nhan-vien">Nhân viên</a></li>
+					<li><a href="${ctxPath}/admin/report/doanh-thu">Thống kê doanh thu</a></li>
+					<li><a href="${ctxPath}/admin/report/san-pham">Thống kê	sản phẩm</a></li>
+					<li><a href="${ctxPath}/admin/nhan-vien">Quản lý nhân viên</a></li>
 				</ul></li>
 		</ul>
 	</div>
@@ -77,7 +67,7 @@
 	</a> <a data-toggle="tooltip" data-placement="top" title="Lock"> <span
 		class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
 	</a> <a data-toggle="tooltip" data-placement="top" title="Logout"
-		href="login.html"> <span class="glyphicon glyphicon-off"
+		href="${ctxPath}/logout"> <span class="glyphicon glyphicon-off"
 		aria-hidden="true"></span>
 	</a>
 </div>
@@ -104,9 +94,9 @@
 						<li><a href="javascript:;"> <span
 								class="badge bg-red pull-right">50%</span> <span>Settings</span>
 						</a></li>
-						<li><a href="javascript:;">Help</a></li>
-						<li><a href="${ctxPatj}/logout"><i
-								class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+						<li><a href="javascript:;">Thông tin</a></li>
+						<li><a href="${ctxPath}/logout"><i
+								class="fa fa-sign-out pull-right"></i> Đăng xuất</a></li>
 					</ul></li>
 
 				<li role="presentation" class="dropdown"><a href="javascript:;"

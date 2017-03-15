@@ -12,30 +12,42 @@ import javax.persistence.Table;
 public class Product {
 	@Id
 	@Column(name="proid")
-	private long proId;
-	@Column(name="proname")
-	private String proName;
-	@Column(name="cateid")
-	private long cateId;
-	@Column(name="price")
-	private long price;
-	@Column(name="quantity")
-	private int quantity;
-	@Column(name="img")
-	private String img;
-	@Column(name="description")
-	private String description;
-	@Column(name="createdate")
-	private Date createDate;
-	@Column(name="modifydate")
-	private Date modifyDate;
+	long proId;
 	
+	@Column(name="proname")
+	String proName;
+	
+	@Column(name="cateid")
+	long cateId;
+	
+	@Column(name="price")
+	long price;
+	
+	@Column(name="quantity")
+	int quantity;
+	
+	@Column(name="img")
+	String img;
+	
+	@Column(name="description")
+	String description;
+	
+	@Column(name="createdate")
+	Date createDate;
+	
+	@Column(name="modifydate")
+	Date modifyDate;
+	
+	@Column(name="username")
+	String userName;
+
 	public Product() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	public Product(long proId, String proName, long cateId, long price, int quantity, String img, String description,
-			Date createDate, Date modifyDate) {
+			Date createDate, Date modifyDate, String userName) {
 		super();
 		this.proId = proId;
 		this.proName = proName;
@@ -46,6 +58,7 @@ public class Product {
 		this.description = description;
 		this.createDate = createDate;
 		this.modifyDate = modifyDate;
+		this.userName = userName;
 	}
 
 	public long getProId() {
@@ -119,4 +132,13 @@ public class Product {
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+		
 }

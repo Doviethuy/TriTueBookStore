@@ -29,7 +29,7 @@
 		<beans:property name="url"
 			value="jdbc:mysql://localhost:3306/bookstore" />
 		<beans:property name="username" value="root" />
-		<beans:property name="password" value="123456" />
+		<beans:property name="password" value="1234" />
 	</beans:bean>
 
 	<!-- cau hinh model vi du: user -->
@@ -39,7 +39,10 @@
 		<beans:property name="annotatedClasses">
 			<beans:list>
 				<beans:value>com.aptech.model.User</beans:value>
-				<beans:value>com.aptech.model.Category</beans:value>
+				<beans:value>com.aptech.model.Category</beans:value>				
+				<beans:value>com.aptech.model.Product</beans:value>
+				<beans:value>com.aptech.model.Invoice</beans:value>
+				<beans:value>com.aptech.model.InvoiceDetail</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="hibernateProperties">

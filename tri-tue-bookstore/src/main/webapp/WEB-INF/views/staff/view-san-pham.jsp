@@ -56,28 +56,26 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<%@ include file="include/add-user-modal.jsp" %>
+						<%@ include file="include/add-product-modal.jsp" %>
 						<table id="datatable" class="table table-striped table-bordered">
 							<thead>
 								<tr>
-									<th>Họ và tên</th>
-									<th>Tên tài khoản</th>
-									<th>Điện thoại</th>
-									<th>Ngày sinh</th>
-									<th>Ngày tạo tk</th>
-									<th>Vai trò</th>
+									<th>Tên sản phẩm</th>
+									<th>Danh mục</th>
+									<th>Giá</th>
+									<th>Số lượng</th>
+									<th>Ngày tạo</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="item" items="${lstUser}">									
-									<tr>
-										<td>${item.name}</td>
-										<td>${item.userName}</td>
-										<td>${item.phone}</td>
-										<td>${item.dob}</td>
-										<td>${item.createDate}</td>
-										<td>${item.role}</td>
-									</tr>
+								<c:forEach var="item" items="${lstPro}">	
+										<tr>
+											<td>${item.proName}</td>
+											<td>${item.cateId}</td>
+											<td>${item.price}</td>
+											<td>${item.quantity}</td>
+											<td>${item.createDate}</td>
+										</tr>
 								</c:forEach>								
 							</tbody>
 						</table>

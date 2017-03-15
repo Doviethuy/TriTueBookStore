@@ -3,19 +3,14 @@
 <!-- sidebar menu -->
 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 	<div class="menu_section">
-		<h3>Tổng quan</h3>
+		<h3>General</h3>
 		<ul class="nav side-menu">
-			<li><a><i class="fa fa-home"></i> Trang chính <span
+			<li><a><i class="fa fa-edit"></i>Nhân viên<span
 					class="fa fa-chevron-down"></span></a>
 				<ul class="nav child_menu">
 					<li><a href="${ctxPath}/staff/ban-hang">Bán hàng</a></li>
-					<li><a href="${ctxPath}/staff/nhap-hang">Nhập hàng</a></li>
-				</ul></li>
-			<li><a><i class="fa fa-edit"></i> Thống kê <span
-					class="fa fa-chevron-down"></span></a>
-				<ul class="nav child_menu">
 					<li><a href="${ctxPath}/staff/san-pham">Sản phẩm</a></li>
-					<li><a href="${ctxPatj}/staff/hoa-don">Hoá đơn</a></li>
+					<li><a href="${ctxPath}/staff/hoa-don">Hoá đơn</a></li>
 				</ul></li>
 		</ul>
 	</div>
@@ -31,7 +26,7 @@
 	</a> <a data-toggle="tooltip" data-placement="top" title="Lock"> <span
 		class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
 	</a> <a data-toggle="tooltip" data-placement="top" title="Logout"
-		href="login.html"> <span class="glyphicon glyphicon-off"
+		href="${ctxPath}/logout"> <span class="glyphicon glyphicon-off"
 		aria-hidden="true"></span>
 	</a>
 </div>
