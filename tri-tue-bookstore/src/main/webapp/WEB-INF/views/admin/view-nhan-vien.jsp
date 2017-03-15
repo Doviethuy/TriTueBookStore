@@ -64,8 +64,9 @@
 									<th>Tên tài khoản</th>
 									<th>Điện thoại</th>
 									<th>Ngày sinh</th>
-									<th>Ngày tạo tk</th>
+									<th>Ngày tạo</th>
 									<th>Vai trò</th>
+									<th>Chức năng</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -77,6 +78,14 @@
 										<td>${item.dob}</td>
 										<td>${item.createDate}</td>
 										<td>${item.role}</td>
+										<td>
+											<div class="btn-action-table">
+												<label onclick="editUser('${item.userName}')"><i class="fa fa-edit"></i></label>
+											</div>
+											<div class="btn-action-table">
+												<label onclick="deleteUser('${item.userName}')"><i class="fa fa-remove"></i></label>
+											</div>
+										</td>
 									</tr>
 								</c:forEach>								
 							</tbody>
@@ -86,4 +95,13 @@
 			</div>
 		</div>
 </div>
+<script type="text/javascript">
+	function editUser(id){
+		
+	}
+	
+	function deleteUser(id){
+		
+	}
+</script>
 <%@ include file="include/footer.jsp"%>

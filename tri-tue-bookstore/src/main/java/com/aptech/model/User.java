@@ -162,6 +162,12 @@ public class User {
 		this.modifyDate = modifyDate;
 		this.role = role;
 	}
+
+	@Override
+	public String toString() {
+		return "User [userName=" + userName + ", password=" + password + ", name=" + name + ", dob=" + dob + ", gender=" + gender + ", address=" + address + ", phone=" + phone + ", img=" + img + ", description=" + description + ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", role=" + role + "]";
+	}
+	
 	
 	
 }

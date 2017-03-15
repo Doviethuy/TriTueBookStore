@@ -68,7 +68,7 @@
 					<div class="form-group">
 						<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Ảnh</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input id="img" name="files" class="form-control col-md-7 col-xs-12" type="file">
+							<input id="img" name="img" class="form-control col-md-7 col-xs-12" type="file" name="middle-name">
 						</div>
 					</div>
 					<div class="form-group">
