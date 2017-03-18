@@ -77,6 +77,7 @@ public class AdminController {
 
 	@RequestMapping(value = "/admin/add-staff", method = RequestMethod.POST)
 	public String addUser(HttpServletRequest request, HttpServletResponse response, @RequestParam("files") MultipartFile file) throws ParseException, ServletException {
+		System.out.println("filename:"+file.getName());
 		HttpSession session = request.getSession();
 		if (PermissionUtil.checkLogin(session)) {
 			if (PermissionUtil.checkAdminRole(session)) {

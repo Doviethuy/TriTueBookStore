@@ -1,34 +1,40 @@
 package com.aptech.util;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Date;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileUtil {
-	public static void upload(HttpServletRequest request,MultipartFile file) throws ServletException {
+	public static void upload(HttpServletRequest request, MultipartFile file)
+			throws ServletException {
 		if (!file.isEmpty()) {
-			ServletContext context = request.getServletContext();
-			String filePath = context.getInitParameter("upload-folder");
+			String rootPath = System.getProperty("catalina.home");
 			try {
+				byte[] bytes = file.getBytes();
+				File dir = new File(rootPath + File.separator + "tmpFiles");
+				if (!dir.exists())
+					dir.mkdirs();
+				// Create the file on server
+				File serverFile = new File(dir.getAbsolutePath()
+						+ File.separator + file.getOriginalFilename());
+				BufferedOutputStream stream = new BufferedOutputStream(
+						new FileOutputStream(serverFile));
+				stream.write(bytes);
+				stream.close();
 
-	            // Get the file and save it somewhere
-	            byte[] bytes = file.getBytes();
-	            System.out.println(file.getName()+":file name");
-	            Path path = Paths.get(filePath + file.getOriginalFilename()+new Date().getTime());
-	            Files.write(path, bytes);
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
+				System.out.println("Server File Location="
+						+ serverFile.getAbsolutePath());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
-		}else {
+		} else {
 			System.out.println("empty");
 		}
 	}
