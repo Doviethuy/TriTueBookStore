@@ -80,7 +80,7 @@
 										<td>${item.role}</td>
 										<td>
 											<div class="btn-action-table">
-												<label onclick="editUser('${item.userName}')"><i class="fa fa-edit"></i></label>
+												<label onclick="showEditUserModal('${item.userName}')"><i class="fa fa-edit"></i></label>
 											</div>
 											<div class="btn-action-table">
 												<label onclick="deleteUser('${item.userName}')"><i class="fa fa-remove"></i></label>
@@ -95,9 +95,38 @@
 			</div>
 		</div>
 </div>
+<%@ include file="include/edit-user-modal.jsp"%>
 <script type="text/javascript">
-	function editUser(id){
-		
+	function showEditUserModal(userName){
+		$.ajax({
+			url: "${ctxPath}/admin/find-user",
+			method: "POST",
+			data:{
+				id: userName,
+			},
+			success: function(user){
+				$("#editUserForm #userNameHidden").val(user.userName);
+				$("#editUserForm #userName").val(user.userName);
+				$("#editUserForm #password").val(user.password);
+				$("#editUserForm #name").val(user.name);
+				$("#editUserForm #address").val(user.address);
+				$("#editUserForm #phone").val(user.phone);
+				$("#editUserForm #description").val(user.description);
+				var dob = new Date(user.dob);
+				$("#editUserForm #dob").val(dob.getDate() + '/' + (dob.getMonth() + 1) + '/' +  dob.getFullYear());
+				if(user.gender == 0){
+					$("#editUserForm #rdoMale").attr("checked", "checked");
+				} else {
+					$("#editUserForm #rdoFemale").attr("checked", "checked");
+				}
+				if(user.role == 0){
+					$("#editUserForm #rdoStaff").attr("checked", "checked");
+				} else {
+					$("#editUserForm #rdoAdmin").attr("checked", "checked");
+				}
+				$("#editUser").modal("show");
+			}
+		});
 	}
 	
 	function deleteUser(id){
