@@ -25,6 +25,8 @@ public class LoginController {
 			if (user.getPassword().equals(password)) {
 				HttpSession session = request.getSession();
 				session.setAttribute(Constant.USERNAME, user.getUserName());
+				session.setAttribute(Constant.FULLNAME, user.getName());
+				session.setAttribute(Constant.AVARTAR, user.getImg());
 				session.setAttribute(Constant.ROLE, user.getRole());
 			}
 		}

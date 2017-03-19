@@ -53,6 +53,7 @@ public class AdminController {
 		HttpSession session = request.getSession();
 		if (PermissionUtil.checkLogin(session)) {
 			if (PermissionUtil.checkAdminRole(session)) {
+				
 				return "admin/view-hang-hoa";
 			} else {
 				return "redirect:/";
@@ -107,8 +108,19 @@ public class AdminController {
 		}
 	}
 
+	@RequestMapping(value = "/admin/delete-staff", method = RequestMethod.POST)
+	public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws ParseException, ServletException {
+		HttpSession session = request.getSession();
+		if (PermissionUtil.checkLogin(session)) {
+			if (PermissionUtil.checkAdminRole(session)) {
+				String userName = GetterUtil.getString(request.getParameter("userName").toString(), StringPool.BLANK);
+				userService.deleteUser(userName);
+			}
+		}
+	}
+
 	@RequestMapping(value = "/admin/edit-staff", method = RequestMethod.POST)
-	public String editUser(HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="files", required = false) MultipartFile file) throws ParseException, ServletException {
+	public String editUser(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "files", required = false) MultipartFile file) throws ParseException, ServletException {
 		HttpSession session = request.getSession();
 		if (PermissionUtil.checkLogin(session)) {
 			if (PermissionUtil.checkAdminRole(session)) {
@@ -126,7 +138,7 @@ public class AdminController {
 				byte role = (byte) GetterUtil.getInteger(request.getParameter("role").toString(), 0);
 				String fileName = FileUtil.upload(request, file);
 				if (fileName.equals(StringPool.BLANK)) {
-					User oldUser =  userService.getUser(userName);
+					User oldUser = userService.getUser(userName);
 					fileName = oldUser.getImg();
 				}
 				User item = new User(userName, password, name, dob, gender, address, phone, fileName, description, new Date(), new Date(), role);
