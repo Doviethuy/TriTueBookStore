@@ -59,6 +59,24 @@ public class Product {
 		this.modifyDate = modifyDate;
 		this.userName = userName;
 	}
+	
+	
+
+	public Product(long proId, String proName, long cateId, long price,
+			int quantity, String img, String description, Date createDate,
+			Date modifyDate, String userName) {
+		super();
+		this.proId = proId;
+		this.proName = proName;
+		this.cateId = cateId;
+		this.price = price;
+		this.quantity = quantity;
+		this.img = img;
+		this.description = description;
+		this.createDate = createDate;
+		this.modifyDate = modifyDate;
+		this.userName = userName;
+	}
 
 	public long getProId() {
 		return proId;

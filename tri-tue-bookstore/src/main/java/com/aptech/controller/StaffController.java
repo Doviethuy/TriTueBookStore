@@ -55,11 +55,7 @@ public class StaffController {
 	public String staffProduct(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		if (PermissionUtil.checkLogin(session)) {
-			ArrayList<Category> lstCategory = categoryService.getAllCategory();
-			request.setAttribute("lstCate", lstCategory);
-			ArrayList<Product> lstProduct = productService.getAllProduct();
-			request.setAttribute("lstPro", lstProduct);
-			return "staff/view-san-pham";			
+			return "staff/view-hang-hoa";			
 		} else {
 			return "redirect:/";
 		}
@@ -77,86 +73,5 @@ public class StaffController {
 		}
 	}
 	
-	@RequestMapping(value = "/staff/add-product", method = RequestMethod.POST)
-	public String addUser(HttpServletRequest request, HttpServletResponse response, @RequestParam("files") MultipartFile file) throws ParseException, ServletException {
-		HttpSession session = request.getSession();
-		if (PermissionUtil.checkLogin(session)) {
-			if (!PermissionUtil.checkAdminRole(session)) {
-				String redirect = GetterUtil.getString(request.getParameter("redirect").toString(), StringPool.BLANK);
-				String proName = GetterUtil.getString(request.getParameter("proName").toString(), StringPool.BLANK);
-				Long cateId = GetterUtil.getLong(request.getParameter("cateId").toString());
-				Long price = GetterUtil.getLong(request.getParameter("price").toString());
-				int quantity = GetterUtil.getInteger(request.getParameter("quantity").toString());
-				String fileName = FileUtil.upload(request, file);
-				String description = GetterUtil.getString(request.getParameter("description").toString(), StringPool.BLANK);
-				String userName = session.getAttribute(Constant.USERNAME).toString();
-				Product item = new Product(proName, cateId, price, quantity, fileName, description, new Date(), new Date(), userName);
-				productService.addProduct(item);
-				return "redirect:" + redirect;
-			} else {
-				return "redirect:/";
-			}
-		} else {
-			return "redirect:/";
-		}
-	}
-
-	@RequestMapping(value = "/staff/delete-product", method = RequestMethod.POST)
-	public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws ParseException, ServletException {
-		HttpSession session = request.getSession();
-		if (PermissionUtil.checkLogin(session)) {
-			if (!PermissionUtil.checkAdminRole(session)) {
-				long proId = GetterUtil.getLong(request.getParameter("proId").toString());
-				productService.deleteProduct(proId);
-			}
-		}
-	}
-
-	@RequestMapping(value = "/staff/edit-product", method = RequestMethod.POST)
-	public String editUser(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "files", required = false) MultipartFile file) throws ParseException, ServletException {
-		HttpSession session = request.getSession();
-		if (PermissionUtil.checkLogin(session)) {
-			if (!PermissionUtil.checkAdminRole(session)) {
-				long proId = GetterUtil.getLong(request.getParameter("proIdHidden").toString());
-				String redirect = GetterUtil.getString(request.getParameter("redirect").toString(), StringPool.BLANK);
-				String proName = GetterUtil.getString(request.getParameter("proName").toString(), StringPool.BLANK);
-				Long cateId = GetterUtil.getLong(request.getParameter("cateId").toString());
-				Long price = GetterUtil.getLong(request.getParameter("price").toString());
-				int quantity = GetterUtil.getInteger(request.getParameter("quantity").toString());
-				String fileName = FileUtil.upload(request, file);
-				String description = GetterUtil.getString(request.getParameter("description").toString(), StringPool.BLANK);
-				String userName = session.getAttribute(Constant.USERNAME).toString();
-				if (fileName.equals(StringPool.BLANK)) {
-					Product oldProduct = productService.getProduct(proId);
-					fileName = oldProduct.getImg();
-				}
-				Product oldProduct = productService.getProduct(proId);
-				Date createDate = oldProduct.getCreateDate();
-				Product item = new Product(proName, cateId, price, quantity, fileName, description, createDate, new Date(), userName);
-				productService.updateProduct(item);
-				return "redirect:" + redirect;
-			} else {
-				return "redirect:/";
-			}
-		} else {
-			return "redirect:/";
-		}
-	}
-
-	@RequestMapping(value = "/staff/find-product", method = RequestMethod.POST, produces = "application/json")
-	@ResponseBody
-	public Product getProductById(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		if (PermissionUtil.checkLogin(session)) {
-			if (!PermissionUtil.checkAdminRole(session)) {
-				long proId = GetterUtil.getLong(request.getParameter("id"));
-				Product product = null;
-				if (proId!=0L) {
-					product = productService.getProduct(proId);
-				}
-				return product;
-			}
-		}
-		return null;
-	}
+	
 }

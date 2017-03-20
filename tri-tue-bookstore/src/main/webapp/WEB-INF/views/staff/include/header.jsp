@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>DataTables | Gentelella</title>
+<title>Nhà sách Trí Tuệ</title>
 
 <!-- Bootstrap -->
 <link
@@ -63,12 +63,12 @@
 					<!-- menu profile quick info -->
 					<div class="profile clearfix">
 						<div class="profile_pic">
-							<img src="${ctxPath}/resources/images/img.jpg" alt="..."
+							<img src="/data/${avartar}" alt="..."
 								class="img-circle profile_img">
 						</div>
 						<div class="profile_info">
 							<span>Xin chào,</span>
-							<h2>John Doe</h2>
+							<h2>${fullName}</h2>
 						</div>
 					</div>
 					<!-- /menu profile quick info -->

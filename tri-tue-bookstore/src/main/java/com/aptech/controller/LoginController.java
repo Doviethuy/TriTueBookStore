@@ -38,6 +38,8 @@ public class LoginController {
 		HttpSession session = request.getSession();
 		session.removeAttribute(Constant.USERNAME);
 		session.removeAttribute(Constant.ROLE);
+		session.removeAttribute(Constant.AVARTAR);
+		session.removeAttribute(Constant.ROLE);
 		return "redirect:/";
 	}
 }
