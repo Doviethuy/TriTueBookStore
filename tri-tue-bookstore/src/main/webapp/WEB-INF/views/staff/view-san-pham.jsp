@@ -64,17 +64,34 @@
 									<th>Danh mục</th>
 									<th>Giá</th>
 									<th>Số lượng</th>
+									<th>Mô tả</th>
 									<th>Ngày tạo</th>
+									<th>Chức năng</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach var="item" items="${lstPro}">	
 										<tr>
 											<td>${item.proName}</td>
-											<td>${item.cateId}</td>
+											<c:forEach var="category" items="${lstCate}">
+												<c:if test="${item.cateId==category.cateId}">
+													<td>${category.cateName}</td>
+												</c:if>
+											</c:forEach>											
 											<td>${item.price}</td>
 											<td>${item.quantity}</td>
+											<td>${item.description}</td>
 											<td>${item.createDate}</td>
+											<td>
+												<div class="btn-action-table">
+													<label onclick="showEditProductModal('${item.proId}')"><i
+														class="fa fa-edit"></i></label>
+												</div>
+												<div class="btn-action-table">
+												<label onclick="deleteProduct('${item.proId}')"><i
+													class="fa fa-remove"></i></label>
+												</div>
+											</td>
 										</tr>
 								</c:forEach>								
 							</tbody>
@@ -84,4 +101,45 @@
 			</div>
 		</div>
 </div>
+<%@ include file="include/edit-product-modal.jsp"%>
+<script type="text/javascript">
+	function showEditProductModal(proId) {	
+		
+		$.ajax({
+			url : "${ctxPath}/staff/find-product",
+			method : "POST",
+			data : {
+				id : proId,
+			},
+			success : function(product) {
+				
+				$("#editProductForm #proIdHidden").val(product.proId);
+				$("#editProductForm #proId").val(product.proId);
+				$("#editProductForm #proName").val(product.proName);
+				$("#editProductForm #cateId").val(product.cateId);
+				$("#editProductForm #price").val(product.price);
+				$("#editProductForm #quantity").val(product.quantity);
+				$("#editProductForm #description").val(product.description);				
+				$("#editProduct").modal("show");
+			}
+		});
+	}
+
+	function deleteProduct(id) {
+		var r = confirm("Bạn có chắc chắn muốn xoá Product: " + id);
+		if (r == true) {
+			$.ajax({
+				url : "${ctxPath}/staff/delete-product",
+				method : "POST",
+				data : {
+					proId : id
+				},
+				success : function() {
+					window.location.reload();
+				}
+			});
+		}
+	}
+</script>
+
 <%@ include file="include/footer.jsp"%>

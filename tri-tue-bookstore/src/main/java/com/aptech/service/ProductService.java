@@ -20,7 +20,7 @@ public class ProductService {
 	}
 	
 	@Transactional
-	public Product getProduct(int proId){
+	public Product getProduct(long proId){
 		return productDAO.getProduct(proId);
 	}
 	
@@ -35,7 +35,7 @@ public class ProductService {
 	}
 	
 	@Transactional
-	public void deleteProduct(int proId){
+	public void deleteProduct(long proId){
 		productDAO.deleteProduct(proId);
 	}
 }

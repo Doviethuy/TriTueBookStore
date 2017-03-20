@@ -46,10 +46,9 @@ public class Product {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Product(long proId, String proName, long cateId, long price, int quantity, String img, String description,
+	public Product(String proName, long cateId, long price, int quantity, String img, String description,
 			Date createDate, Date modifyDate, String userName) {
 		super();
-		this.proId = proId;
 		this.proName = proName;
 		this.cateId = cateId;
 		this.price = price;

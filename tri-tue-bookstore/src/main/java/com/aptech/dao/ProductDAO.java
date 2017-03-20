@@ -19,9 +19,9 @@ public class ProductDAO {
 		return new ArrayList<Product>(session.createQuery("from Product").list());
 	}
 	
-	public Product getProduct(int proId){
+	public Product getProduct(long proId){
 		Session session = this.sessionFactory.getCurrentSession();
-		return (Product) session.get(Product.class, new Integer(proId));
+		return (Product) session.get(Product.class, new Long(proId));
 	}
 	
 	public Product addProduct(Product product){
@@ -35,9 +35,9 @@ public class ProductDAO {
 		session.update(product);
 	}
 	
-	public void deleteProduct(int proId){
+	public void deleteProduct(long proId){
 		Session session = this.sessionFactory.getCurrentSession();
-		Product product = (Product) session.get(Product.class, new Integer(proId));
+		Product product = (Product) session.get(Product.class, new Long(proId));
 		if(product!=null){
 			session.delete(product);
 		}
