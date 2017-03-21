@@ -24,14 +24,12 @@ import com.aptech.model.Product;
 import com.aptech.model.User;
 import com.aptech.service.CategoryService;
 import com.aptech.service.InvoiceDetailService;
+import com.aptech.service.InvoiceService;
 import com.aptech.service.ProductService;
 import com.aptech.service.UserService;
 import com.aptech.util.Constant;
 import com.aptech.util.FileUtil;
 import com.aptech.util.PermissionUtil;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -41,6 +39,8 @@ public class AdminController {
 	UserService userService;
 	@Autowired
 	ProductService productService;
+	@Autowired
+	InvoiceService invoiceService;
 	@Autowired
 	InvoiceDetailService invoiceDetailService;
 	@Autowired
@@ -71,6 +71,22 @@ public class AdminController {
 				ArrayList<Product> lstProduct = productService.getAllProduct();
 				request.setAttribute("lstPro", lstProduct);
 				return "admin/view-san-pham";
+			} else {
+				return "redirect:/";
+			}
+		} else {
+			return "redirect:/";
+		}
+	}
+	
+	@RequestMapping("/admin/report/danh-muc")
+	public String reportCategory(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (PermissionUtil.checkLogin(session)) {
+			if (PermissionUtil.checkAdminRole(session)) {
+				ArrayList<Category> lstCategory = categoryService.getAllCategory();
+				request.setAttribute("lstCate", lstCategory);
+				return "admin/view-danh-muc";
 			} else {
 				return "redirect:/";
 			}
@@ -233,6 +249,80 @@ public class AdminController {
 		return null;
 	}
 
+	@RequestMapping(value = "/admin/add-category", method = RequestMethod.POST)
+	public String addCategory(HttpServletRequest request,
+			HttpServletResponse response) throws ParseException,
+			ServletException {
+		HttpSession session = request.getSession();
+		if (PermissionUtil.checkLogin(session)) {
+			if (PermissionUtil.checkAdminRole(session)) {
+				String redirect = GetterUtil.getString(
+						request.getParameter("redirect").toString(),
+						StringPool.BLANK);
+				String cateName = GetterUtil.getString(
+						request.getParameter("proName").toString(),
+						StringPool.BLANK);
+				Category item = new Category(cateName);
+				categoryService.addCategory(item);
+				return "redirect:" + redirect;
+			} else {
+				return "redirect:/";
+			}
+		} else {
+			return "redirect:/";
+		}
+	}
+
+	@RequestMapping(value = "/admin/delete-category", method = RequestMethod.POST)
+	public void deleteCategory(HttpServletRequest request,
+			HttpServletResponse response) throws ParseException,
+			ServletException {
+		HttpSession session = request.getSession();
+		if (PermissionUtil.checkLogin(session)) {
+			if (PermissionUtil.checkAdminRole(session)) {
+				int cateId = GetterUtil.getInteger(request.getParameter("cateId").toString());
+				categoryService.deleteCategory(cateId);
+			}
+		}
+	}
+
+	@RequestMapping(value = "/admin/edit-category", method = RequestMethod.POST)
+	public String editCategory(HttpServletRequest request, HttpServletResponse response) throws ParseException,ServletException {
+		HttpSession session = request.getSession();
+		if (PermissionUtil.checkLogin(session)) {
+			if (PermissionUtil.checkAdminRole(session)) {
+				int cateId = GetterUtil.getInteger(request.getParameter("cateIdHidden").toString());
+				String redirect = GetterUtil.getString(request.getParameter("redirect").toString(),StringPool.BLANK);
+				String cateName = GetterUtil.getString(request.getParameter("proName").toString(),StringPool.BLANK);				
+				Category item = categoryService.getCategory(cateId);
+				item.setCateName(cateName);
+				categoryService.updateCategory(item);
+				return "redirect:" + redirect;
+			} else {
+				return "redirect:/";
+			}
+		} else {
+			return "redirect:/";
+		}
+	}
+
+	@RequestMapping(value = "/admin/find-category", method = RequestMethod.POST, produces = "application/json")
+	@ResponseBody
+	public Category getCategoryById(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (PermissionUtil.checkLogin(session)) {
+			if (PermissionUtil.checkAdminRole(session)) {
+				int cateId = GetterUtil.getInteger(request.getParameter("id"), 0);
+				Category category = null;
+				if (cateId != 0) {
+					category = categoryService.getCategory(cateId);
+				}
+				return category;
+			}
+		}
+		return null;
+	}
+
 	@RequestMapping(value = "/admin/add-product", method = RequestMethod.POST)
 	public String addProduct(HttpServletRequest request,
 			HttpServletResponse response,
@@ -247,7 +337,7 @@ public class AdminController {
 				String proName = GetterUtil.getString(
 						request.getParameter("proName").toString(),
 						StringPool.BLANK);
-				Long cateId = GetterUtil.getLong(request.getParameter("cateId")
+				int cateId = GetterUtil.getInteger(request.getParameter("cateId")
 						.toString());
 				Long price = GetterUtil.getLong(request.getParameter("price")
 						.toString());
@@ -301,7 +391,7 @@ public class AdminController {
 				String proName = GetterUtil.getString(
 						request.getParameter("proName").toString(),
 						StringPool.BLANK);
-				Long cateId = GetterUtil.getLong(request.getParameter("cateId")
+				int cateId = GetterUtil.getInteger(request.getParameter("cateId")
 						.toString());
 				Long price = GetterUtil.getLong(request.getParameter("price")
 						.toString());
@@ -342,7 +432,6 @@ public class AdminController {
 		if (PermissionUtil.checkLogin(session)) {
 			if (PermissionUtil.checkAdminRole(session)) {
 				long proId = GetterUtil.getLong(request.getParameter("id"), 0L);
-				System.out.println("pro id:"+proId);
 				Product product = null;
 				if (proId != 0L) {
 					product = productService.getProduct(proId);

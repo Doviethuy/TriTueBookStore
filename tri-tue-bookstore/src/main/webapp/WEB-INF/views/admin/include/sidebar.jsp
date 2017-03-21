@@ -11,6 +11,7 @@
 				<ul class="nav child_menu">
 					<li><a href="${ctxPath}/admin/report/doanh-thu">Thống kê doanh thu</a></li>
 					<li><a href="${ctxPath}/admin/report/san-pham">Thống kê	sản phẩm</a></li>
+					<li><a href="${ctxPath}/admin/report/danh-muc">Thống kê	danh mục</a></li>
 					<li><a href="${ctxPath}/admin/nhan-vien">Quản lý nhân viên</a></li>
 				</ul></li>
 		</ul>
