@@ -1,56 +1,58 @@
 package com.aptech.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
-@Table(name="product")
+@Table(name = "product")
 public class Product {
 	@Id
-	@Column(name="proid")
+	@Column(name = "proid")
 	long proId;
-	
-	@Column(name="proname")
+
+	@Column(name = "proname")
 	String proName;
-	
-	@Column(name="cateid")
+
+	@Column(name = "cateid")
 	int cateId;
-	
-	@Column(name="price")
+
+	@Column(name = "price")
 	long price;
-	
-	@Column(name="quantity")
+
+	@Column(name = "quantity")
 	int quantity;
-	
-	@Column(name="img")
+
+	@Column(name = "img")
 	String img;
-	
-	@Column(name="description")
+
+	@Column(name = "description")
 	String description;
-	
-	@Column(name="createdate")
+
+	@Column(name = "createdate")
 	Date createDate;
-	
-	@Column(name="modifydate")
+
+	@Column(name = "modifydate")
 	Date modifyDate;
-	
-	@Column(name="username")
+
+	@Column(name = "username")
 	String userName;
+
+	@Transient
+	List<InvoiceDetail> invoiceDetails;
 
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
 
-
-	public Product(String proName, int cateId, long price,
-			int quantity, String img, String description, Date createDate,
-			Date modifyDate, String userName) {
+	public Product(String proName, int cateId, long price, int quantity, String img, String description,
+			Date createDate, Date modifyDate, String userName) {
 		super();
 		this.proName = proName;
 		this.cateId = cateId;
@@ -63,9 +65,8 @@ public class Product {
 		this.userName = userName;
 	}
 
-	public Product(long proId, String proName, int cateId, long price,
-			int quantity, String img, String description, Date createDate,
-			Date modifyDate, String userName) {
+	public Product(long proId, String proName, int cateId, long price, int quantity, String img, String description,
+			Date createDate, Date modifyDate, String userName) {
 		super();
 		this.proId = proId;
 		this.proName = proName;
@@ -158,5 +159,13 @@ public class Product {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-		
+
+	public List<InvoiceDetail> getInvoiceDetails() {
+		return invoiceDetails;
+	}
+
+	public void setInvoiceDetails(List<InvoiceDetail> invoiceDetails) {
+		this.invoiceDetails = invoiceDetails;
+	}
+
 }

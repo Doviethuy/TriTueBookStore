@@ -1,27 +1,32 @@
 package com.aptech.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
-@Table(name="invoice")
+@Table(name = "invoice")
 public class Invoice {
 	@Id
-	@Column(name ="ivid")
+	@Column(name = "ivid")
 	private long ivId;
-	@Column(name="amount")
+	@Column(name = "amount")
 	private long amount;
-	@Column(name="createdate")
+	@Column(name = "createdate")
 	private Date createDate;
-	@Column(name="modifydate")
+	@Column(name = "modifydate")
 	private Date modifyDate;
-	@Column(name="username")
+	@Column(name = "username")
 	private String username;
-	
+
+	@Transient
+	private List<InvoiceDetail> invoiceDetails;
+
 	public Invoice() {
 		// TODO Auto-generated constructor stub
 	}
@@ -73,6 +78,14 @@ public class Invoice {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public List<InvoiceDetail> getInvoiceDetails() {
+		return invoiceDetails;
+	}
+
+	public void setInvoiceDetails(List<InvoiceDetail> invoiceDetails) {
+		this.invoiceDetails = invoiceDetails;
 	}
 
 }
