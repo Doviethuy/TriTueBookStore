@@ -18,7 +18,7 @@ public class Product {
 	String proName;
 	
 	@Column(name="cateid")
-	long cateId;
+	int cateId;
 	
 	@Column(name="price")
 	long price;
@@ -45,9 +45,12 @@ public class Product {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 
-	public Product(String proName, long cateId, long price, int quantity, String img, String description,
-			Date createDate, Date modifyDate, String userName) {
+
+	public Product(String proName, int cateId, long price,
+			int quantity, String img, String description, Date createDate,
+			Date modifyDate, String userName) {
 		super();
 		this.proName = proName;
 		this.cateId = cateId;
@@ -59,10 +62,8 @@ public class Product {
 		this.modifyDate = modifyDate;
 		this.userName = userName;
 	}
-	
-	
 
-	public Product(long proId, String proName, long cateId, long price,
+	public Product(long proId, String proName, int cateId, long price,
 			int quantity, String img, String description, Date createDate,
 			Date modifyDate, String userName) {
 		super();
@@ -94,11 +95,11 @@ public class Product {
 		this.proName = proName;
 	}
 
-	public long getCateId() {
+	public int getCateId() {
 		return cateId;
 	}
 
-	public void setCateId(long cateId) {
+	public void setCateId(int cateId) {
 		this.cateId = cateId;
 	}
 

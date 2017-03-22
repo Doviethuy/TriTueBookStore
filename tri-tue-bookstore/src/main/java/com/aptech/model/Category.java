@@ -18,6 +18,11 @@ public class Category {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Category(String cateName) {
+		super();
+		this.cateName = cateName;
+	}
+	
 	public Category(int cateId, String cateName) {
 		super();
 		this.cateId = cateId;
