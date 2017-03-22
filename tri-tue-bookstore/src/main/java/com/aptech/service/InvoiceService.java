@@ -13,29 +13,29 @@ import com.aptech.model.Invoice;
 public class InvoiceService {
 	@Autowired
 	InvoiceDAO invoiceDAO;
-	
+
 	@Transactional
-	public ArrayList<Invoice> getAllInvoice(){
+	public ArrayList<Invoice> getAllInvoice() {
 		return invoiceDAO.getAllInvoice();
 	}
-	
+
 	@Transactional
-	public Invoice getInvoice(int ivId){
+	public Invoice getInvoice(int ivId) {
 		return invoiceDAO.getInvoice(ivId);
 	}
-	
+
 	@Transactional
-	public Invoice addInvoice(Invoice invoice){
+	public Invoice addInvoice(Invoice invoice) {
 		return invoiceDAO.addInvoice(invoice);
 	}
-	
+
 	@Transactional
-	public void updateInvoice(Invoice invoice){
-		invoiceDAO.updateInvoice(invoice);
+	public boolean updateInvoice(Invoice invoice) {
+		return invoiceDAO.updateInvoice(invoice);
 	}
-	
+
 	@Transactional
-	public void deleteInvoice(int ivId){
-		invoiceDAO.deleteInvoice(ivId);
+	public boolean deleteInvoice(int ivId) {
+		return invoiceDAO.deleteInvoice(ivId);
 	}
 }

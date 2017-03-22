@@ -13,29 +13,29 @@ import com.aptech.model.Category;
 public class CategoryService {
 	@Autowired
 	CategoryDAO categoryDAO;
-	
+
 	@Transactional
-	public ArrayList<Category> getAllCategory(){
+	public ArrayList<Category> getAllCategory() {
 		return categoryDAO.getAllCategory();
 	}
-	
+
 	@Transactional
-	public Category getCategory(int cateId){
+	public Category getCategory(int cateId) {
 		return categoryDAO.getCategory(cateId);
 	}
-	
+
 	@Transactional
-	public Category addCategory(Category category){
+	public Category addCategory(Category category) {
 		return categoryDAO.addCategory(category);
 	}
-	
+
 	@Transactional
-	public void updateCategory(Category category){
-		categoryDAO.updateCategory(category);
+	public boolean updateCategory(Category category) {
+		return categoryDAO.updateCategory(category);
 	}
-	
+
 	@Transactional
-	public void deleteCategory(int cateId){
-		categoryDAO.deleteCategory(cateId);
+	public boolean deleteCategory(int cateId) {
+		return categoryDAO.deleteCategory(cateId);
 	}
 }

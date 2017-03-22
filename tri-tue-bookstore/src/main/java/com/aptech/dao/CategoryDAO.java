@@ -13,33 +13,45 @@ import com.aptech.model.Category;
 public class CategoryDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
-	
-	public ArrayList<Category> getAllCategory(){
+
+	public ArrayList<Category> getAllCategory() {
 		Session session = this.sessionFactory.getCurrentSession();
 		return new ArrayList<Category>(session.createQuery("from Category").list());
 	}
-	
-	public Category getCategory(int cateId){
+
+	public Category getCategory(int cateId) {
 		Session session = this.sessionFactory.getCurrentSession();
 		return (Category) session.get(Category.class, new Integer(cateId));
 	}
-	
-	public Category addCategory(Category category){
+
+	public Category addCategory(Category category) {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.persist(category);
 		return category;
 	}
-	
-	public void updateCategory(Category category){
+
+	public boolean updateCategory(Category category) {
 		Session session = this.sessionFactory.getCurrentSession();
-		session.update(category);
+		try {
+			session.update(category);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
-	
-	public void deleteCategory(int cateId){
+
+	public boolean deleteCategory(int cateId) {
 		Session session = this.sessionFactory.getCurrentSession();
 		Category category = (Category) session.get(Category.class, new Integer(cateId));
-		if(category!=null){
-			session.delete(category);
+		try {
+			if (category != null) {
+				session.delete(category);
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			return false;
 		}
 	}
 }

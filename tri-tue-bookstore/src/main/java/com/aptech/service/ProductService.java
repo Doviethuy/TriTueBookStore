@@ -13,29 +13,29 @@ import com.aptech.model.Product;
 public class ProductService {
 	@Autowired
 	ProductDAO productDAO;
-	
+
 	@Transactional
-	public ArrayList<Product> getAllProduct(){
+	public ArrayList<Product> getAllProduct() {
 		return productDAO.getAllProduct();
 	}
-	
+
 	@Transactional
-	public Product getProduct(long proId){
+	public Product getProduct(long proId) {
 		return productDAO.getProduct(proId);
 	}
-	
+
 	@Transactional
-	public Product addProduct(Product product){
+	public Product addProduct(Product product) {
 		return productDAO.addProduct(product);
 	}
-	
+
 	@Transactional
-	public void updateProduct(Product product){
-		productDAO.updateProduct(product);
+	public boolean updateProduct(Product product) {
+		return productDAO.updateProduct(product);
 	}
-	
+
 	@Transactional
-	public void deleteProduct(long proId){
-		productDAO.deleteProduct(proId);
+	public boolean deleteProduct(long proId) {
+		return productDAO.deleteProduct(proId);
 	}
 }

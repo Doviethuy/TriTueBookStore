@@ -30,12 +30,12 @@ public class UserService {
 	}
 
 	@Transactional
-	public void updateUser(User user) {
-		userDAO.updateUser(user);
+	public boolean updateUser(User user) {
+		return userDAO.updateUser(user);
 	}
 
 	@Transactional
-	public void deleteUser(String userName) {
-		userDAO.deleteUser(userName);
+	public boolean deleteUser(String userName) {
+		return userDAO.deleteUser(userName);
 	}
 }

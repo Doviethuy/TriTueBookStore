@@ -13,29 +13,29 @@ import com.aptech.model.InvoiceDetail;
 public class InvoiceDetailService {
 	@Autowired
 	InvoiceDetailDAO invoiceDetailDAO;
-	
+
 	@Transactional
-	public ArrayList<InvoiceDetail> getAllInvoiceDetail(){
+	public ArrayList<InvoiceDetail> getAllInvoiceDetail() {
 		return invoiceDetailDAO.getAllInvoiceDetail();
 	}
-	
+
 	@Transactional
-	public InvoiceDetail getInvoiceDetail(int ivId,int proId){
+	public InvoiceDetail getInvoiceDetail(int ivId, int proId) {
 		return invoiceDetailDAO.getInvoiceDetail(ivId, proId);
 	}
-	
+
 	@Transactional
-	public InvoiceDetail addInvoiceDetail(InvoiceDetail invoiceDetail){
+	public InvoiceDetail addInvoiceDetail(InvoiceDetail invoiceDetail) {
 		return invoiceDetailDAO.addInvoiceDetail(invoiceDetail);
 	}
-	
+
 	@Transactional
-	public void updateInvoiceDetail(InvoiceDetail invoiceDetail){
-		invoiceDetailDAO.updateInvoiceDetail(invoiceDetail);
+	public boolean updateInvoiceDetail(InvoiceDetail invoiceDetail) {
+		return invoiceDetailDAO.updateInvoiceDetail(invoiceDetail);
 	}
-	
+
 	@Transactional
-	public void deleteInvoiceDetail(int ivId,int proId){
-		invoiceDetailDAO.deleteInvoiceDetail(ivId, proId);
+	public boolean deleteInvoiceDetail(int ivId, int proId) {
+		return invoiceDetailDAO.deleteInvoiceDetail(ivId, proId);
 	}
 }

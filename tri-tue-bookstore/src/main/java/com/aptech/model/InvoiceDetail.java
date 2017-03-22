@@ -8,24 +8,24 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="invoicedetail")
+@Table(name = "invoicedetail")
 public class InvoiceDetail {
 	@Id
-	@Column(name="ivid")
+	@Column(name = "ivid")
 	private long ivId;
-	
-	@Column(name="proid")
+
+	@Column(name = "proid")
 	private long proId;
-	
-	@Column(name="quantity")
+
+	@Column(name = "quantity")
 	private int quantity;
-	
-	@Column(name="amount")
+
+	@Column(name = "amount")
 	private long amount;
-	
-	@Column(name="createdate")
+
+	@Column(name = "createdate")
 	private Date createDate;
-	
+
 	public InvoiceDetail() {
 		// TODO Auto-generated constructor stub
 	}
@@ -78,5 +78,5 @@ public class InvoiceDetail {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	
+
 }

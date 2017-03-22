@@ -16,8 +16,9 @@ public class UserDAO {
 
 	public ArrayList<User> getAllUser() {
 		Session session = this.sessionFactory.getCurrentSession();
-		//return arraylist de con sap xep
-		//from User co nghia la entity da dc map trong file servlet-context ko phai bang user
+		// return arraylist de con sap xep
+		// from User co nghia la entity da dc map trong file servlet-context ko
+		// phai bang user
 		return new ArrayList<User>(session.createQuery("from User").list());
 	}
 
@@ -32,16 +33,29 @@ public class UserDAO {
 		return user;
 	}
 
-	public void updateUser(User user) {
+	public boolean updateUser(User user) {
 		Session session = this.sessionFactory.getCurrentSession();
-		session.update(user);
+		try {
+			session.update(user);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
-	public void deleteUser(String userName) {
+	public boolean deleteUser(String userName) {
 		Session session = this.sessionFactory.getCurrentSession();
-		User user = (User) session.get(User.class, new String(userName));
-		if (user != null) {
-			session.delete(user);
+		try {
+			User user = (User) session.get(User.class, new String(userName));
+			if (user != null) {
+				session.delete(user);
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			return false;
 		}
+
 	}
 }
