@@ -1,9 +1,12 @@
 package com.aptech.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -54,5 +57,21 @@ public class InvoiceDetailDAO {
 			return false;
 		}
 
+	}
+
+	public List<InvoiceDetail> getInvoiceDetailByIvID(long ivId) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(InvoiceDetail.class);
+		criteria.add(Restrictions.eq("ivId", ivId));
+		List<InvoiceDetail> details = criteria.list();
+		return details;
+	}
+
+	public List<InvoiceDetail> getInvoiceDetailByProId(long proId) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(InvoiceDetail.class);
+		criteria.add(Restrictions.eq("proId", proId));
+		List<InvoiceDetail> details = criteria.list();
+		return details;
 	}
 }

@@ -73,7 +73,9 @@ public class AdminController {
 			} else {
 				return "redirect:/";
 			}
-		} else {
+		} else
+
+		{
 			return "redirect:/";
 		}
 	}

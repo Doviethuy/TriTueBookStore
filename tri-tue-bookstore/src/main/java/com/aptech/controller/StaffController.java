@@ -1,7 +1,7 @@
 package com.aptech.controller;
 
 import java.text.ParseException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.aptech.model.Category;
+import com.aptech.model.Invoice;
 import com.aptech.service.CategoryService;
 import com.aptech.service.InvoiceDetailService;
 import com.aptech.service.InvoiceService;
@@ -58,8 +58,8 @@ public class StaffController {
 	public String staffInvoice(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		if (PermissionUtil.checkLogin(session)) {
-			ArrayList<Category> lstCategory = categoryService.getAllCategory();
-			request.setAttribute("lstCate", lstCategory);
+			List<Invoice> lstInvoice = invoiceService.getAllInvoice();
+			request.setAttribute("lstInv", lstInvoice);
 			return "staff/view-hoa-don";
 		} else {
 			return "redirect:/";

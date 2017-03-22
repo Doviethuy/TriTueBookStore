@@ -25,14 +25,14 @@ public class InvoiceService {
 	}
 
 	@Transactional
-	public Invoice addInvoice(Invoice invoice) {
+	public boolean addInvoice(Invoice invoice) {
 		return invoiceDAO.addInvoice(invoice);
 	}
 
-	@Transactional
-	public boolean updateInvoice(Invoice invoice) {
-		return invoiceDAO.updateInvoice(invoice);
-	}
+	// @Transactional
+	// public boolean updateInvoice(Invoice invoice) {
+	// return invoiceDAO.updateInvoice(invoice);
+	// }
 
 	@Transactional
 	public boolean deleteInvoice(int ivId) {

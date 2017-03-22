@@ -168,4 +168,8 @@ public class Product {
 		this.invoiceDetails = invoiceDetails;
 	}
 
+	public boolean isEnoughQuantity(int quantity) {
+		return (this.quantity > quantity);
+	}
+
 }
