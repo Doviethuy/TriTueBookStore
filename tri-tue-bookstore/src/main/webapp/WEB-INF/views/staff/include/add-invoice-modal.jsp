@@ -1,10 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Thêm hóa đơn</button>
 
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade bs-example-modal-lg" id="addInvoice" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
-			<form method="POST" action="${ctxPath}/admin/add-product" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
+			<form method="POST" action="${ctxPath}/staff/add-invoice" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
+				<input type="hidden" name="redirect" value="/staff/ban-hang"/>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">×</span>
@@ -12,48 +12,71 @@
 					<h4 class="modal-title" id="myModalLabel">Thêm hóa đơn</h4>
 				</div>
 				<div class="modal-body">
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tên sản phẩm <span class="required">*</span>
-						</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" id="proName" name="proName" required="required" class="form-control col-md-7 col-xs-12">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12">Danh mục</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<select class="form-control" id="cateId" name="cateId">
-								<c:forEach var="item" items="${lstCate}">
-									<option value="${item.cateId}">${item.cateName}</option>
-								</c:forEach>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Giá <span class="required">*</span>
-						</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input data-parsley-type="digits" data-parsley-error-message="Giá phải là số"  id="price" name="price" required="required" class="form-control col-md-7 col-xs-12">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Mô tả</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<textarea id="description" required="required" class="form-control parsley-error" name="description" data-parsley-trigger="keyup" data-parsley-minlength="10" data-parsley-maxlength="100" data-parsley-error-message="Mô tả phải lớn hơn 10 và ít hơn 100 ký tự" data-parsley-validation-threshold="10" data-parsley-id="40"></textarea>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Ảnh</label>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input id="img" name="img" class="form-control col-md-7 col-xs-12" type="file" name="middle-name">
-						</div>
-					</div>
+					<table id="datatable3" class="table table-striped table-bordered">
+						<thead>
+							<tr>
+								<th>STT</th>
+								<th>Tên sản phẩm</th>
+								<th>Mã sản phẩm</th>
+								<th>Danh mục</th>
+								<th>Tổng</th>
+								<th>Đơn giá</th>
+								<th>Số lượng</th>
+								<th>Thành tiền</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td id="cal" style="background-color: buttonface">CỘNG TIỀN HÀNG</td>
+								<td><input type="text" readonly id="total" style="color: red;border:none"/></td>
+							</tr>
+						</tfoot>
+						<tbody>
+							
+						</tbody>
+					</table>					
 				</div>
-				<div class="modal-footer">
+				<div class="modal-footer">					
 					<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
 					<button type="submit" class="btn btn-primary">Lưu lại</button>
 				</div>
+			</form>
 		</div>
-		</form>
 	</div>
 </div>
+<script src="${ctxPath}/resources/static/vendors/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+$('#cal').click(function(){
+	var total = 0;
+	$("#total").empty();	
+	$('#datatable3 tbody tr').each(function(){
+		$(this).find('td:last').remove();
+		$(this).find('td:eq(6)').attr("contentEditable","true");
+		var qty = parseInt($(this).find('td:eq(6)').text());
+		var pr = parseFloat($(this).find('td:eq(5)').text());
+		total+=qty*pr;
+		$(this).append('<td>'+qty*pr+'</td>');
+	});
+	$('#total').val(total);
+});
+$('#addInvoice').submit(function(e){
+    e.preventDefault();
+    var productData = [];
+    $('#datatable3 tbody tr').each(function(){
+    	var proId = parseFloat($(this).find('td:eq(2)').text());
+		var qty = parseInt($(this).find('td:eq(6)').text()); 
+		productData.push([proId,qty]);
+	});
+    var data = $(this).serializeArray();
+
+    data = data.concat(productData);
+    
+    $.post($(this).prop('action'), data);
+});
+</script>

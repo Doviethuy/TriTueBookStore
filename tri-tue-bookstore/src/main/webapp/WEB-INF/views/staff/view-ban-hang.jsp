@@ -8,26 +8,11 @@
 		<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
 					<div class="x_title">
-						<h2>
-							Hóa đơn
-						</h2>
-						<ul class="nav navbar-right panel_toolbox">
-							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-							</li>
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-expanded="false"><i
-									class="fa fa-wrench"></i></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="#">Settings 1</a></li>
-									<li><a href="#">Settings 2</a></li>
-								</ul></li>
-							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-						</ul>
+						<h2>Hóa đơn</h2>
 						<div class="clearfix"></div>
 					</div>
-					<div class="x_content">
-						
-						<table  id="datatable2" class="table table-striped table-bordered">
+					<div class="x_content">						
+						<table id="datatable2" class="table table-striped table-bordered">
 							<thead>
 								<tr>
 									<th>Tên sản phẩm</th>
@@ -37,38 +22,16 @@
 									<th>Giá</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr>
-									<th>1</th>
-									<th>2</th>
-									<th>2</th>
-									<th>2</th>
-									<th>2</th>
-								</tr>							
-							</tbody>
+							<tbody></tbody>
 						</table>
-						<button>Modal hóa đơn</button>
 					</div>
+					<button id="btn">Modal hóa đơn</button>
 				</div>
 		</div>
 		<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
 					<div class="x_title">
-						<h2>
-							Chọn sản phẩm
-						</h2>
-						<ul class="nav navbar-right panel_toolbox">
-							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-							</li>
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-expanded="false"><i
-									class="fa fa-wrench"></i></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="#">Settings 1</a></li>
-									<li><a href="#">Settings 2</a></li>
-								</ul></li>
-							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-						</ul>
+						<h2>Chọn sản phẩm</h2>
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">						
@@ -83,8 +46,8 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="product" items="${lstPro}">									
-									<tr onclick="addProductToInvoice()">
+								<c:forEach var="product" items="${lstPro}">	
+									<tr>
 										<td>${product.proName}</td>
 										<td>${product.proId}</td>
 										<c:forEach var="category" items="${lstCate}">
@@ -103,9 +66,42 @@
 		</div>			
 	</div>
 </div>
-<script type="text/javascript">
-	function addProductToInvoice() {
-		confirm("Phần này chưa code, đẩy sản phẩm lên hóa đơn xong click vào nút hiện ra Modal hóa đơn, sau đó thay đổi số lượng từng sản phẩm và tính tổng");
-	}
+<script src="${ctxPath}/resources/static/vendors/jquery/dist/jquery.min.js"></script>
+<%@ include file="include/add-invoice-modal.jsp"%>
+<script type="text/javascript" >
+	$('body').on('click','#datatable tbody tr',function(){
+		$('#datatable2 tbody').append($(this).clone());
+		this.remove();
+	});			
+	$('body').on('click','#datatable2 tbody tr',function(){
+		$('#datatable tbody').append($(this).clone());
+		this.remove();
+	});
+	$('#btn').click(function(){
+		var total=0,stt=0;
+		$("#total").empty();		
+		$("#datatable3 tbody").empty();
+		$('#datatable2 tbody tr').each(function(){
+			stt+=1;
+			var row = $(this).clone().append('<td>'+1+'</td>').prepend('<td>'+stt+'</td>');
+			$('#datatable3 tbody').append(row);
+		});
+		
+		$('#datatable3 tbody tr').each(function(){
+			$(this).find('td:eq(6)').attr("contentEditable","true");
+			var qty = parseInt($(this).find('td:eq(6)').text());
+			var pr = parseFloat($(this).find('td:eq(5)').text());
+			total+=qty*pr;
+			$(this).append('<td>'+qty*pr+'</td>');
+		});
+		$('#datatable3 tr td:nth-child(3)').hide();
+		$('#datatable3 tr th:nth-child(3)').hide();
+		$('#datatable3 tr td:nth-child(4)').hide();
+		$('#datatable3 tr th:nth-child(4)').hide();
+		$('#datatable3 tr td:nth-child(5)').hide();
+		$('#datatable3 tr th:nth-child(5)').hide();
+		$('#total').val(total);
+		$("#addInvoice").modal("show");
+	});
 </script>
 <%@ include file="include/footer.jsp"%>
