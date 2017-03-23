@@ -3,9 +3,11 @@ package com.aptech.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -96,6 +98,14 @@ public class InvoiceDAO {
 			tx.rollback();
 			return false;
 		}
+	}
+
+	public List<Invoice> getInvoiceByUser(String user) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Invoice.class);
+		criteria.add(Restrictions.eq("username", user));
+		List<Invoice> invoices = criteria.list();
+		return invoices;
 	}
 
 }

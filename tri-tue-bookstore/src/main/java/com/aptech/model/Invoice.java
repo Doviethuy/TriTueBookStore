@@ -6,6 +6,9 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -80,6 +83,9 @@ public class Invoice {
 		this.username = username;
 	}
 
+	@OneToMany
+	@JoinTable(name = "invoicedetail", joinColumns = { @JoinColumn(name = "ivid") }, inverseJoinColumns = {
+			@JoinColumn(name = "") })
 	public List<InvoiceDetail> getInvoiceDetails() {
 		return invoiceDetails;
 	}

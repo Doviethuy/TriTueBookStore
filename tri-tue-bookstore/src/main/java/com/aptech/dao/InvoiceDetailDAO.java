@@ -1,6 +1,7 @@
 package com.aptech.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -71,6 +72,14 @@ public class InvoiceDetailDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(InvoiceDetail.class);
 		criteria.add(Restrictions.eq("proId", proId));
+		List<InvoiceDetail> details = criteria.list();
+		return details;
+	}
+
+	public List<InvoiceDetail> getInvoiceDetailByCreateDate(Date createDate) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(InvoiceDetail.class);
+		criteria.add(Restrictions.eq("createdate", createDate));
 		List<InvoiceDetail> details = criteria.list();
 		return details;
 	}

@@ -1,6 +1,7 @@
 package com.aptech.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,10 @@ public class InvoiceDetailService {
 	@Transactional
 	public List<InvoiceDetail> getInvoiceDetailByProId(long proId) {
 		return invoiceDetailDAO.getInvoiceDetailByProId(proId);
+	}
+
+	@Transactional
+	public List<InvoiceDetail> getInvoiceDetailByCreateDate(Date createDate) {
+		return invoiceDetailDAO.getInvoiceDetailByCreateDate(createDate);
 	}
 }

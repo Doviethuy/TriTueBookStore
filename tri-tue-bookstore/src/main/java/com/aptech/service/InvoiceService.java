@@ -1,6 +1,7 @@
 package com.aptech.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,5 +38,10 @@ public class InvoiceService {
 	@Transactional
 	public boolean deleteInvoice(int ivId) {
 		return invoiceDAO.deleteInvoice(ivId);
+	}
+
+	@Transactional
+	public List<Invoice> getInvoiceByUser(String user) {
+		return invoiceDAO.getInvoiceByUser(user);
 	}
 }
