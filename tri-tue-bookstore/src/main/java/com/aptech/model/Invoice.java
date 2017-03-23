@@ -31,7 +31,6 @@ public class Invoice {
 	private List<InvoiceDetail> invoiceDetails;
 
 	public Invoice() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Invoice(long ivId, long amount, Date createDate, Date modifyDate, String username) {

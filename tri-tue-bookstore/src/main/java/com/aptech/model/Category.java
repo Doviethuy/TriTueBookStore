@@ -15,7 +15,6 @@ public class Category {
 	private String cateName;
 	
 	public Category() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Category(String cateName) {

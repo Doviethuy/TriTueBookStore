@@ -93,7 +93,7 @@
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<button type="submit" class="btn btn-primary">Lưu lại</button>
 				</div>
-		</div>
-		</form>
+			</form>
+		</div>		
 	</div>
 </div>

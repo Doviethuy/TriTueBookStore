@@ -27,7 +27,6 @@ public class InvoiceDetail {
 	private Date createDate;
 
 	public InvoiceDetail() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public InvoiceDetail(long ivId, long proId, int quantity, long amount, Date createDate) {
