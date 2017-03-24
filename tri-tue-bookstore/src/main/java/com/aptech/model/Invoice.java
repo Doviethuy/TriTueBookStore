@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -16,6 +18,7 @@ import javax.persistence.Transient;
 @Table(name = "invoice")
 public class Invoice {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ivid")
 	private long ivId;
 	@Column(name = "amount")
@@ -31,7 +34,6 @@ public class Invoice {
 	private List<InvoiceDetail> invoiceDetails;
 
 	public Invoice() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Invoice(long ivId, long amount, Date createDate, Date modifyDate, String username) {

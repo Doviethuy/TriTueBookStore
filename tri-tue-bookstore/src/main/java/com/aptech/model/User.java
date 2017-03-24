@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,6 +13,7 @@ import javax.persistence.Table;
 @Table(name="USER")
 public class User {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="username")
 	String userName;
 	
@@ -166,8 +169,6 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [userName=" + userName + ", password=" + password + ", name=" + name + ", dob=" + dob + ", gender=" + gender + ", address=" + address + ", phone=" + phone + ", img=" + img + ", description=" + description + ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", role=" + role + "]";
-	}
-	
-	
-	
+	}	
+		
 }

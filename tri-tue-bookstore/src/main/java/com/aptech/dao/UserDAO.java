@@ -16,9 +16,6 @@ public class UserDAO {
 
 	public ArrayList<User> getAllUser() {
 		Session session = this.sessionFactory.getCurrentSession();
-		// return arraylist de con sap xep
-		// from User co nghia la entity da dc map trong file servlet-context ko
-		// phai bang user
 		return new ArrayList<User>(session.createQuery("from User").list());
 	}
 

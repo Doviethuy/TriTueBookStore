@@ -2,6 +2,8 @@ package com.aptech.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -9,13 +11,13 @@ import javax.persistence.Table;
 @Table(name="category")
 public class Category {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="cateid")
 	private int cateId;
 	@Column(name="catename")
 	private String cateName;
 	
 	public Category() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Category(String cateName) {
