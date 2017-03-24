@@ -4,7 +4,9 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.Normalizer;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +30,7 @@ public class FileUtil {
 					File dir = new File(rootPath + File.separator + "data");
 					if (!dir.exists())
 						dir.mkdirs();
-					newFileName = new Date().getTime() + file.getOriginalFilename();
+					newFileName = new Date().getTime() + removeAccent(file.getOriginalFilename());
 					File serverFile = new File(dir.getAbsolutePath() + File.separator + newFileName);
 					BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 					stream.write(bytes);
@@ -42,6 +44,12 @@ public class FileUtil {
 			}
 		}
 		return newFileName;
+	}
+
+	public static String removeAccent(String s) {
+		String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
+		Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+		return pattern.matcher(temp).replaceAll("").replace("\"", "'").replace("ð", "d").replace("Ð", "D");
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(FileUtil.class.getName());
