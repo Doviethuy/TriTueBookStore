@@ -38,7 +38,7 @@ public class InvoiceDAO {
 
 	public boolean addInvoice(Invoice invoice) {
 		Session session = this.sessionFactory.getCurrentSession();
-		Transaction tx = session.beginTransaction();
+		/*Transaction tx = session.beginTransaction();
 		try {
 			List<InvoiceDetail> invoiceDetails = invoice.getInvoiceDetails();
 			for (InvoiceDetail invoiceDetail : invoiceDetails) {
@@ -61,8 +61,9 @@ public class InvoiceDAO {
 		} catch (Exception e) {
 			tx.rollback();
 			return false;
-		}
-
+		}*/
+		session.persist(invoice);
+		return true;
 	}
 
 	// public boolean updateInvoice(Invoice invoice) {

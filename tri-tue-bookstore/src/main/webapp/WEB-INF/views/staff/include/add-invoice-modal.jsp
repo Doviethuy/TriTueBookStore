@@ -3,7 +3,7 @@
 <div class="modal fade bs-example-modal-lg" id="addInvoice" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
-			<form method="POST" action="${ctxPath}/staff/add-invoice" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
+			<form method="POST" action="${ctxPath}/staff/add-invoice" id="frm" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
 				<input type="hidden" name="redirect" value="/staff/ban-hang"/>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">
@@ -34,7 +34,7 @@
 								<td></td>
 								<td></td>
 								<td id="cal" style="background-color: buttonface">CỘNG TIỀN HÀNG</td>
-								<td><input type="text" readonly id="total" style="color: red;border:none"/></td>
+								<td><input type="text" readonly name="total" id="total" style="color: red;border:none"/></td>
 							</tr>
 						</tfoot>
 						<tbody>
@@ -65,18 +65,37 @@ $('#cal').click(function(){
 	});
 	$('#total').val(total);
 });
-$('#addInvoice').submit(function(e){
+$('#frm').submit(function(e){
     e.preventDefault();
-    var productData = [];
+    var proId = [];
+    var proQty = [];
     $('#datatable3 tbody tr').each(function(){
-    	var proId = parseFloat($(this).find('td:eq(2)').text());
-		var qty = parseInt($(this).find('td:eq(6)').text()); 
-		productData.push([proId,qty]);
+    	var id = $(this).find('td:eq(2)').text();
+    	proId.push(id);
+    	$('#frm').append(
+    		$('<input>', {
+    		    type: 'hidden',
+    		    name: 'id'+proId.length,
+    		    val: id
+    		})
+    	);
+    	var qty = $(this).find('td:eq(6)').text();
+    	proQty.push(qty);
+    	$('#frm').append(
+    		$('<input>', {
+    		    type: 'hidden',
+    		    name: 'qty'+proQty.length,
+    		    val: qty
+    		})
+    	);
 	});
-    var data = $(this).serializeArray();
-
-    data = data.concat(productData);
-    
-    $.post($(this).prop('action'), data);
+    $('#frm').append(
+    	$('<input>', {
+    	    type: 'hidden',
+    	    name: 'arrLength',
+    	    val: proQty.length
+    	})
+    );
+    $('#frm').submit();
 });
 </script>
