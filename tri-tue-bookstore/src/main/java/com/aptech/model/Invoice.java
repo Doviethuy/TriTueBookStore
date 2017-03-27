@@ -85,9 +85,6 @@ public class Invoice {
 		this.username = username;
 	}
 
-	@OneToMany
-	@JoinTable(name = "invoicedetail", joinColumns = { @JoinColumn(name = "ivid") }, inverseJoinColumns = {
-			@JoinColumn(name = "") })
 	public List<InvoiceDetail> getInvoiceDetails() {
 		return invoiceDetails;
 	}

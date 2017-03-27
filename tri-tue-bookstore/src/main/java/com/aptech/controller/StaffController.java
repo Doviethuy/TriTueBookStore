@@ -3,6 +3,7 @@ package com.aptech.controller;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -67,20 +68,30 @@ public class StaffController {
 			invoice.setCreateDate(new Date());
 			invoice.setModifyDate(new Date());
 			invoice.setUsername(userName);
-			invoiceService.addInvoice(invoice);
 			
+			Long ivId ;
 			ArrayList<Invoice> lstInvoice = invoiceService.getAllInvoice();
-			invoice = lstInvoice.get(lstInvoice.size() - 1);			
-			Long ivId = invoice.getIvId();
-			
+			try {
+				Invoice invoiceLast = lstInvoice.get(lstInvoice.size()-1);			
+				ivId = invoiceLast.getIvId();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			ivId = new Long(0);
+//			
+			List<InvoiceDetail> invoiceDetails = new ArrayList<>();
 			int arrLength = GetterUtil.getInteger(request.getParameter("arrLength").toString());
 			for (int i = 0; i < arrLength; i++) {
 				long proId = GetterUtil.getLong(request.getParameter("id"+(i+1)).toString());
 				int proQty = GetterUtil.getInteger(request.getParameter("qty"+(i+1)).toString());
 				long price = productService.getProduct(proId).getPrice();
 				InvoiceDetail invoiceDetail = new InvoiceDetail(ivId, proId, proQty, proQty*price, new Date());
-				invoiceDetailService.addInvoiceDetail(invoiceDetail);
+				invoiceDetails.add(invoiceDetail);
+//				invoiceDetailService.addInvoiceDetail(invoiceDetail);
 			}
+			
+			invoice.setInvoiceDetails(invoiceDetails);
+			invoiceService.addInvoice(invoice);
 			return "redirect:" + redirect;
 		} else {
 			return "redirect:/";
