@@ -68,17 +68,17 @@ public class StaffController {
 			invoice.setModifyDate(new Date());
 			invoice.setUsername(userName);
 			invoiceService.addInvoice(invoice);
-			ArrayList<Invoice> lstInvoice = invoiceService.getAllInvoice();
-			invoice = lstInvoice.get(lstInvoice.size() - 1);
 			
+			ArrayList<Invoice> lstInvoice = invoiceService.getAllInvoice();
+			invoice = lstInvoice.get(lstInvoice.size() - 1);			
 			Long ivId = invoice.getIvId();
-			Object obj = request.getAttribute("data");	
-			String[][] strObj = (String[][]) obj;
-			for (String[] product : strObj) {
-				Long proId = GetterUtil.getLong(product[0]);
-				int qty = GetterUtil.getInteger(product[1]);
-				Long price = productService.getProduct(proId).getPrice();
-				InvoiceDetail invoiceDetail = new InvoiceDetail(ivId, proId, qty, qty*price, new Date());
+			
+			int arrLength = GetterUtil.getInteger(request.getParameter("arrLength").toString());
+			for (int i = 0; i < arrLength; i++) {
+				long proId = GetterUtil.getLong(request.getParameter("id"+(i+1)).toString());
+				int proQty = GetterUtil.getInteger(request.getParameter("qty"+(i+1)).toString());
+				long price = productService.getProduct(proId).getPrice();
+				InvoiceDetail invoiceDetail = new InvoiceDetail(ivId, proId, proQty, proQty*price, new Date());
 				invoiceDetailService.addInvoiceDetail(invoiceDetail);
 			}
 			return "redirect:" + redirect;

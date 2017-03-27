@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.aptech.model.Product;
+import com.aptech.model.User;
 import com.aptech.util.FileUtil;
 
 @Repository
@@ -35,7 +36,9 @@ public class ProductDAO {
 	private SessionFactory sessionFactory;
 
 	public ArrayList<Product> getAllProduct() {
-		TransportClient client = null;
+		Session session = this.sessionFactory.getCurrentSession();
+		return new ArrayList<Product>(session.createQuery("from Product").list());
+		/*TransportClient client = null;
 		ArrayList<Product> lstProducts = new ArrayList<Product>();
 		DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
 		try {
@@ -64,7 +67,7 @@ public class ProductDAO {
 				client.close();
 			}
 		}
-		return lstProducts;
+		return lstProducts;*/
 	}
 
 	public Product getProduct(long proId) {
