@@ -110,7 +110,7 @@ public class ProductDAO {
 
 	public boolean isEnoughQuantity(long proId, int quantity) {
 		Product product = this.getProduct(proId);
-		if (product == null || product.getQuantity() > quantity) {
+		if (product == null || product.getQuantity() < quantity) {
 			return false;
 		}
 		return true;

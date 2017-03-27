@@ -49,7 +49,17 @@ public class InvoiceDAO {
 			}
 
 			session.persist(invoice);
+			Long ivId ;
+			try {
+				ArrayList<Invoice> lstInvoice = this.getAllInvoice();
+				Invoice invoiceLast = lstInvoice.get(lstInvoice.size()-1);	
+				ivId = invoiceLast.getIvId()+1;
+			} catch (Exception e) {
+				ivId=new Long(0);
+			}
+			
 			for (InvoiceDetail invoiceDetail : invoiceDetails) {
+				invoiceDetail.setIvId(ivId);
 				session.persist(invoiceDetail);
 				long proId = invoiceDetail.getProId();
 				Product product = productDAO.getProduct(proId);

@@ -70,13 +70,13 @@ public class StaffController {
 			invoice.setUsername(userName);
 			
 			Long ivId ;
-			ArrayList<Invoice> lstInvoice = invoiceService.getAllInvoice();
-			try {
-				Invoice invoiceLast = lstInvoice.get(lstInvoice.size()-1);			
-				ivId = invoiceLast.getIvId();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
+//			ArrayList<Invoice> lstInvoice = invoiceService.getAllInvoice();
+//			try {
+//				Invoice invoiceLast = lstInvoice.get(lstInvoice.size()-1);			
+//				ivId = invoiceLast.getIvId();
+//			} catch (Exception e) {
+//				// TODO: handle exception
+//			}
 			ivId = new Long(0);
 //			
 			List<InvoiceDetail> invoiceDetails = new ArrayList<>();

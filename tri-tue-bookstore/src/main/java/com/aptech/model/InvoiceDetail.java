@@ -1,5 +1,6 @@
 package com.aptech.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -9,11 +10,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "invoicedetail")
-public class InvoiceDetail {
+public class InvoiceDetail implements Serializable {
 	@Id
 	@Column(name = "ivid")
 	private long ivId;
-
+	@Id
 	@Column(name = "proid")
 	private long proId;
 
