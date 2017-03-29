@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.aptech.model.Category;
 import com.aptech.model.Invoice;
@@ -53,7 +54,6 @@ public class StaffController {
 			return "redirect:/";
 		}
 	}
-
 
 	@RequestMapping(value = "/staff/add-invoice", method = RequestMethod.POST)
 	public String addInvoice(HttpServletRequest request, HttpServletResponse response) throws ParseException, ServletException {
@@ -95,6 +95,49 @@ public class StaffController {
 			return "redirect:" + redirect;
 		} else {
 			return "redirect:/";
+		}
+	}
+
+	@RequestMapping(value = "/staff/edit-invoice", method = RequestMethod.POST)
+	public String editInvoice(HttpServletRequest request, HttpServletResponse response) throws ParseException, ServletException {
+		HttpSession session = request.getSession();
+		if (PermissionUtil.checkLogin(session)) {
+			String redirect = GetterUtil.getString(request.getParameter("redirect").toString(), StringPool.BLANK);
+			long ivId = GetterUtil.getLong(request.getParameter("ivId").toString());
+			Invoice invoice = invoiceService.getInvoice(ivId);			
+			List<InvoiceDetail> invoiceDetails = new ArrayList<>();
+			int arrLength = GetterUtil.getInteger(request.getParameter("arrLength").toString());
+			long newTotal = 0;
+			for (int i = 0; i < arrLength; i++) {
+				long proId = GetterUtil.getLong(request.getParameter("id"+(i+1)).toString());
+				int proQty = GetterUtil.getInteger(request.getParameter("qty"+(i+1)).toString());
+				long price = productService.getProduct(proId).getPrice();
+				newTotal+=proQty*price;
+				if(proQty!=0)
+					invoiceDetails.add(new InvoiceDetail(ivId, proId, proQty, proQty*price, new Date()));
+			}
+			invoice.setAmount(newTotal);
+			invoice.setModifyDate(new Date());
+			invoice.setInvoiceDetails(invoiceDetails);
+			invoiceService.updateInvoice(invoice);
+			return "redirect:" + redirect;
+		} else {
+			return "redirect:/";
+		}
+	}
+
+	@RequestMapping(value = "/staff/find-invoice", method = RequestMethod.POST, produces = "application/json")
+	@ResponseBody
+	public void getInvoiceById(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (PermissionUtil.checkLogin(session)) {
+			Invoice invoice = invoiceService.getInvoice(GetterUtil.getLong(request.getParameter("id"), 0L));
+			session.setAttribute("lstInvoiceDetail", invoice.getInvoiceDetails());
+			session.setAttribute("ivId", invoice.getIvId());
+			ArrayList<Product> lstProduct = productService.getAllProduct();
+			request.setAttribute("lstPro", lstProduct);
+			ArrayList<Category> lstCategory = categoryService.getAllCategory();
+			request.setAttribute("lstCate", lstCategory);
 		}
 	}
 		

@@ -21,7 +21,7 @@ public class InvoiceService {
 	}
 
 	@Transactional
-	public Invoice getInvoice(int ivId) {
+	public Invoice getInvoice(long ivId) {
 		return invoiceDAO.getInvoice(ivId);
 	}
 
@@ -30,10 +30,10 @@ public class InvoiceService {
 		return invoiceDAO.addInvoice(invoice);
 	}
 
-	// @Transactional
-	// public boolean updateInvoice(Invoice invoice) {
-	// return invoiceDAO.updateInvoice(invoice);
-	// }
+	@Transactional
+	public boolean updateInvoice(Invoice invoice) {
+		return invoiceDAO.updateInvoice(invoice);
+	}
 
 	@Transactional
 	public boolean deleteInvoice(int ivId) {

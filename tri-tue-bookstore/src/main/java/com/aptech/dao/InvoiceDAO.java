@@ -31,9 +31,9 @@ public class InvoiceDAO {
 		return new ArrayList<Invoice>(session.createQuery("from Invoice").list());
 	}
 
-	public Invoice getInvoice(int ivId) {
+	public Invoice getInvoice(long ivId) {
 		Session session = this.sessionFactory.getCurrentSession();
-		return (Invoice) session.get(Invoice.class, new Integer(ivId));
+		return (Invoice) session.get(Invoice.class, new Long(ivId));
 	}
 
 	public boolean addInvoice(Invoice invoice) {
@@ -78,15 +78,15 @@ public class InvoiceDAO {
 //		return true;
 	}
 
-	// public boolean updateInvoice(Invoice invoice) {
-	// Session session = this.sessionFactory.getCurrentSession();
-	// try {
-	// session.update(invoice);
-	// return true;
-	// } catch (Exception e) {
-	// return false;
-	// }
-	// }
+	public boolean updateInvoice(Invoice invoice) {
+		Session session = this.sessionFactory.getCurrentSession();
+		try {
+			session.update(invoice);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 
 	public boolean deleteInvoice(int ivId) {
 		Session session = this.sessionFactory.getCurrentSession();
