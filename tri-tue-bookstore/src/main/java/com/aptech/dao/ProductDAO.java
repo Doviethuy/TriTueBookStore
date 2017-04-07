@@ -16,6 +16,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.aptech.model.Category;
 import com.aptech.model.Product;
 import com.aptech.util.Constant;
 import com.google.gson.JsonArray;
@@ -29,7 +30,7 @@ public class ProductDAO {
 	private SessionFactory sessionFactory;
 
 	public ArrayList<Product> getAllProduct() {
-		ArrayList<Product> products = new ArrayList<Product>();
+		/*ArrayList<Product> products = new ArrayList<Product>();
 		JestClient client = connectElastic();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
@@ -50,8 +51,8 @@ public class ProductDAO {
 				product.setUserName(temp.get("userName").toString());
 				product.setCateId(Integer.valueOf(temp.get("cateId").toString()));
 				product.setQuantity(Integer.valueOf(temp.get("quantity").toString()));
-//				product.setCreateDate(sdf.parse(temp.get("createDate").toString()));
-//				product.setModifyDate(sdf.parse(temp.get("modifyDate").toString()));
+				product.setCreateDate(sdf.parse(temp.get("createDate").toString()));
+				product.setModifyDate(sdf.parse(temp.get("modifyDate").toString()));
 				products.add(product);
 			}
 		} catch (Exception e) {
@@ -61,7 +62,9 @@ public class ProductDAO {
 				client.shutdownClient();
 			}
 		}
-		return products;
+		return products;*/
+		Session session = this.sessionFactory.getCurrentSession();
+		return new ArrayList<Product>(session.createQuery("from Product").list());
 	}
 
 	public Product getProduct(long proId) {
