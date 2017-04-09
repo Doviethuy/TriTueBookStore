@@ -79,7 +79,7 @@ public class InvoiceDetailDAO {
 	public List<InvoiceDetail> getInvoiceDetailByCreateDate(Date createDate) {
 		Session session = this.sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(InvoiceDetail.class);
-		criteria.add(Restrictions.eq("createdate", createDate));
+		criteria.add(Restrictions.eq("createDate", createDate));
 		List<InvoiceDetail> details = criteria.list();
 		return details;
 	}

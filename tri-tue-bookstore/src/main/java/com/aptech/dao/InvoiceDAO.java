@@ -1,7 +1,11 @@
 package com.aptech.dao;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -41,6 +45,9 @@ public class InvoiceDAO {
 		Transaction tx = session.beginTransaction();
 		try {
 			List<InvoiceDetail> invoiceDetails = invoice.getInvoiceDetails();
+			if (invoiceDetails.size()==0) {
+				return false;
+			}
 			for (InvoiceDetail invoiceDetail : invoiceDetails) {
 				long proId = invoiceDetail.getProId();
 				if (!productDAO.isEnoughQuantity(proId, invoiceDetail.getQuantity())) {
@@ -120,5 +127,92 @@ public class InvoiceDAO {
 		List<Invoice> invoices = criteria.list();
 		return invoices;
 	}
+	
+	public List<Invoice> getInvoiceByCreateDate(Date date) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(Invoice.class);
+		criteria.add(Restrictions.eq("createDate", date));
+		List<Invoice> invoices = criteria.list();
+		return invoices;
+	}
 
+//	public static void main(String[] args) {
+////		System.out.println(rundomProduct());
+//		
+//		for (int i = 0; i < 10; i++) {
+////			System.out.println(rundomProduct());
+////			System.out.println(rundomDate());
+//			SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+//			System.out.println(format.format(createDate(2)));
+//		}
+//	}
+	
+	public int rundomProduct(){
+		Random rand = new Random();
+		int  randomInt = rand.nextInt(100) + 1;
+		return randomInt;
+	}
+	
+	public int rundom(int threshold){
+		Random rand = new Random();
+		int  randomInt = rand.nextInt(threshold) + 1;
+		return randomInt;
+	}
+	
+	public int rundomDate(){
+		Random rand = new Random();
+		int  date = rand.nextInt(30) + 1;
+		return date;
+	}
+	
+	public  Date createDate(){
+	Calendar calendar = Calendar.getInstance();
+	calendar.set(Calendar.DAY_OF_MONTH, this.rundomDate());
+	Date date = calendar.getTime();
+	return date;
+	}
+	
+	public List<Product> getListProduct(){
+		List<Product> list = new ArrayList<>();
+		for (int i = 0; i < 3; i++) {
+			int proid = rundomProduct();
+			Product product = productDAO.getProduct(proid);
+			if (list.contains(product) || product.getQuantity()==0) {
+				continue;
+			}
+			list.add(product);
+		}
+		return list;
+	}
+	
+	public InvoiceDetail createInvoiceDetail(Product product, Date createDate){
+		InvoiceDetail detail = new InvoiceDetail();
+		long proid = product.getProId();
+		int quantity = product.getQuantity();
+		int invoiceQuantity = this.rundom(quantity);
+		detail.setProId(proid);
+		detail.setCreateDate(createDate);
+		detail.setQuantity(invoiceQuantity);
+		detail.setAmount(invoiceQuantity*(product.getPrice()));
+		return detail;
+	}
+	
+	public Invoice createInvoice(){
+		Invoice invoice = new Invoice();
+		Date createDate = this.createDate();
+		invoice.setCreateDate(createDate);
+		invoice.setModifyDate(createDate);
+		invoice.setUsername("huyenvtt");
+		List<Product> listProduct = this.getListProduct();
+		int size = listProduct.size();
+		List<InvoiceDetail> invoiceDetails = new ArrayList<>();
+		int amount= 0;
+		for (Product product:listProduct) {
+			InvoiceDetail detail = this.createInvoiceDetail(product, createDate);
+			invoiceDetails.add(detail);
+			amount += detail.getAmount();
+		}
+		invoice.setInvoiceDetails(invoiceDetails);
+		return invoice;
+	}
 }
