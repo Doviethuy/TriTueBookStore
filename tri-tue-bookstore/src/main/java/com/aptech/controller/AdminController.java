@@ -492,4 +492,17 @@ public class AdminController {
 		return null;
 	}
 
+	@RequestMapping(value="admin/autoInsert")
+	public String insertInvoice(){
+		boolean b = false;
+		for (int i = 0; i < 5; i++) {
+			Invoice invoice = invoiceService.createInvoice();
+			b=invoiceService.addInvoice(invoice);
+			if (b) {
+				System.out.println("Insert thanh cong");
+			}
+			
+		}
+		return "redirect:/";
+	}
 }
