@@ -56,15 +56,7 @@ public class InvoiceDAO {
 			}
 
 			session.persist(invoice);
-			Long ivId ;
-			try {
-				ArrayList<Invoice> lstInvoice = this.getAllInvoice();
-				Invoice invoiceLast = lstInvoice.get(lstInvoice.size()-1);	
-				ivId = invoiceLast.getIvId()+1;
-			} catch (Exception e) {
-				ivId=new Long(0);
-			}
-			
+			Long ivId = invoice.getIvId();
 			for (InvoiceDetail invoiceDetail : invoiceDetails) {
 				invoiceDetail.setIvId(ivId);
 				session.persist(invoiceDetail);
@@ -85,7 +77,7 @@ public class InvoiceDAO {
 //		return true;
 	}
 
-	public boolean updateInvoice(Invoice invoice) {
+/*	public boolean updateInvoice(Invoice invoice) {
 		Session session = this.sessionFactory.getCurrentSession();
 		try {
 			session.update(invoice);
@@ -93,7 +85,7 @@ public class InvoiceDAO {
 		} catch (Exception e) {
 			return false;
 		}
-	}
+	}*/
 
 	public boolean deleteInvoice(int ivId) {
 		Session session = this.sessionFactory.getCurrentSession();
@@ -177,8 +169,12 @@ public class InvoiceDAO {
 		for (int i = 0; i < 3; i++) {
 			int proid = rundomProduct();
 			Product product = productDAO.getProduct(proid);
-			if (list.contains(product) || product.getQuantity()==0) {
+			if (list.contains(product) ) {
 				continue;
+			}
+			if (product.getQuantity()==0) {
+				product.setQuantity(20);
+				productDAO.updateProduct(product);
 			}
 			list.add(product);
 		}
@@ -213,6 +209,7 @@ public class InvoiceDAO {
 			amount += detail.getAmount();
 		}
 		invoice.setInvoiceDetails(invoiceDetails);
+		invoice.setAmount(amount);
 		return invoice;
 	}
 }
