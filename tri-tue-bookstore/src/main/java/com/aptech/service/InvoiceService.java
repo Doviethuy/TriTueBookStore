@@ -44,4 +44,9 @@ public class InvoiceService {
 	public List<Invoice> getInvoiceByUser(String user) {
 		return invoiceDAO.getInvoiceByUser(user);
 	}
+	
+	@Transactional
+	public Invoice createInvoice(){
+		return invoiceDAO.createInvoice();
+	}
 }
