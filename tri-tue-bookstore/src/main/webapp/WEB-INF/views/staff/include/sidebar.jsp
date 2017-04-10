@@ -19,13 +19,7 @@
 
 <!-- /menu footer buttons -->
 <div class="sidebar-footer hidden-small">
-	<a data-toggle="tooltip" data-placement="top" title="Settings"> <span
-		class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-	</a> <a data-toggle="tooltip" data-placement="top" title="Full Screen">
-		<span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-	</a> <a data-toggle="tooltip" data-placement="top" title="Lock"> <span
-		class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-	</a> <a data-toggle="tooltip" data-placement="top" title="Logout"
+	<a data-toggle="tooltip" data-placement="top" title="Logout"
 		href="${ctxPath}/logout"> <span class="glyphicon glyphicon-off"
 		aria-hidden="true"></span>
 	</a>
@@ -49,7 +43,7 @@
 						<span class=" fa fa-angle-down"></span>
 					</a>
 					<ul class="dropdown-menu dropdown-usermenu pull-right">
-						<li><a href="javascript:;"> Thông tin </a></li>
+						<li><a href="${ctxPath}/info"> Thông tin </a></li>
 						<li>
 							<a href="${ctxPath}/logout">
 								<i class="fa fa-sign-out pull-right"></i> Đăng xuất

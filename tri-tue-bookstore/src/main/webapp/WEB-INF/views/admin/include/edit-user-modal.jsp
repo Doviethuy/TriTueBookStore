@@ -17,7 +17,7 @@
 						<label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Tên tài khoản <span class="required">*</span>
 						</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
-							<input type="text" id="userName" name="userName" required="required" class="form-control col-md-7 col-xs-12">
+							<input type="text" id="userName" name="userName" readonly class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
 					<div class="form-group">
@@ -45,9 +45,9 @@
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Giới tính</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
                           <div id="gender" class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                            <label class="btn btn-default">
                               <input type="radio" name="gender" id="rdoMale" value="0">Nam</label>
-                            <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                            <label class="btn btn-default">
                               <input type="radio" name="gender" id="rdoFemale" value="1">Nữ</label>
                           </div>
                         </div>
@@ -81,9 +81,9 @@
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Vai trò</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
                           <div id="role" class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                            <label class="btn btn-default">
                               <input type="radio" name="role" id="rdoStaff" value="0">Nhân viên</label>
-                            <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                            <label class="btn btn-default">
                               <input type="radio" name="role" id="rdoAdmin" value="1">Quản lý</label>
                           </div>
                         </div>

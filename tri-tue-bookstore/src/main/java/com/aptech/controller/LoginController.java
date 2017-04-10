@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.aptech.model.User;
 import com.aptech.service.UserService;
 import com.aptech.util.Constant;
+import com.aptech.util.PermissionUtil;
 
 @Controller
 public class LoginController {
@@ -36,10 +37,60 @@ public class LoginController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String login(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		session.removeAttribute(Constant.USERNAME);
+		session.invalidate();
+		/*session.removeAttribute(Constant.USERNAME);
 		session.removeAttribute(Constant.ROLE);
 		session.removeAttribute(Constant.AVARTAR);
-		session.removeAttribute(Constant.ROLE);
+		session.removeAttribute(Constant.ROLE);*/
 		return "redirect:/";
+	}
+
+	@RequestMapping(value = "/info")
+	public String info(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if(PermissionUtil.checkLogin(session)){
+			User user = userService.getUser(session.getAttribute(Constant.USERNAME).toString());
+			request.setAttribute("user", user);
+			return "staff/view-info";
+		}else{
+			return "redirect:/";
+		}
+	}
+
+	@RequestMapping(value = "/pass")
+	public String pass(HttpServletRequest request) {
+		return "login/change-pass";
+	}
+	@RequestMapping(value = "/changePass", method = RequestMethod.POST)
+	public String changePass(@RequestParam("userName") String userName, @RequestParam("passOld") String passOld, @RequestParam("passNew") String passNew, HttpServletRequest request) {
+		User user = userService.getUser(userName);
+		if (user != null) {
+			if (user.getPassword().equals(passOld)&&passNew!="") {
+				user.setPassword(passNew);
+				userService.updateUser(user);
+				request.setAttribute("status", "Change password successful!");
+			}else{
+				request.setAttribute("status", "Wrong password!");
+			}
+		}else{
+			request.setAttribute("status", "Wrong user name!");
+		}
+		return "login/change-result";
+	}
+
+	@RequestMapping(value = "/adminInfo")
+	public String adminInfo(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if(PermissionUtil.checkLogin(session)){
+			if(PermissionUtil.checkAdminRole(session)){
+				User user = userService.getUser(session.getAttribute(Constant.USERNAME).toString());
+				request.setAttribute("user", user);
+				return "admin/view-admin-info";
+			}else{
+				return "redirect:/";
+			}
+		}else{
+			return "redirect:/";
+		}
 	}
 }

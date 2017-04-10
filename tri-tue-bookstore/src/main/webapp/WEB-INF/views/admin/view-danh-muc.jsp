@@ -56,8 +56,7 @@
 			data : {
 				id : cateId,
 			},
-			success : function(category) {				
-				$("#editCategoryForm #cateIdHidden").val(category.cateId);
+			success : function(category) {
 				$("#editCategoryForm #cateId").val(category.cateId);
 				$("#editCategoryForm #cateName").val(category.cateName);			
 				$("#editCategory").modal("show");

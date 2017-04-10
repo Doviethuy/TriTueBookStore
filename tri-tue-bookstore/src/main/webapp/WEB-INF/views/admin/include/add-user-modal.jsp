@@ -45,9 +45,9 @@
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Giới tính</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
                           <div id="gender" class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                            <label class="btn btn-default">
                               <input type="radio" name="gender" value="0">Nam</label>
-                            <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                            <label class="btn btn-default">
                               <input type="radio" name="gender" value="1">Nữ</label>
                           </div>
                         </div>
@@ -81,9 +81,9 @@
 						<label class="control-label col-md-3 col-sm-3 col-xs-12">Vai trò</label>
 						<div class="col-md-6 col-sm-6 col-xs-12">
                           <div id="role" class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                            <label class="btn btn-default">
                               <input type="radio" name="role" value="0">Nhân viên</label>
-                            <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                            <label class="btn btn-default">
                               <input type="radio" name="role" value="1">Quản lý</label>
                           </div>
                         </div>

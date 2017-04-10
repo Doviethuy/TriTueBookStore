@@ -32,17 +32,20 @@
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
-            <form method="POST" action="${ctxPath}/login">
-              <h1>Đăng nhập</h1>
+            <form method="POST" action="${ctxPath}/changePass" id="changePass">
+              <h1>Đổi mật khẩu</h1>
               <div>
-                <input type="text" name="userName" class="form-control" placeholder="Tên tài khoản" required="" />
+                <input type="text" name="userName" class="form-control" placeholder="Tên tài khoản" required />
               </div>
               <div>
-                <input type="password" name="password" class="form-control" placeholder="Mật khẩu" required="" />
+                <input type="password" name="passOld" class="form-control" placeholder="Mật khẩu cũ" required />
               </div>
               <div>
-                <input class="btn btn-default submit" type="submit" value="Đăng nhập">
-                <a class="reset_pass" href="${ctxPath}/pass">Đổi mật khẩu</a>
+                <input type="password" name="passNew" class="form-control" placeholder="Mật khẩu mới" required />
+              </div>
+              <div>
+                <input class="btn btn-default submit" type="submit" value="Đổi mật khẩu">
+                <a class="reset_pass" href="${ctxPath}/">Về trang đăng nhập</a>
               </div>
 
               <div class="clearfix"></div>

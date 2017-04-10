@@ -41,7 +41,7 @@ public class InvoiceDAO {
 	}
 
 	public boolean addInvoice(Invoice invoice) {
-		Session session = this.sessionFactory.openSession();
+		/*Session session = this.sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		try {
 			List<InvoiceDetail> invoiceDetails = invoice.getInvoiceDetails();
@@ -72,12 +72,13 @@ public class InvoiceDAO {
 			return false;
 		}finally {
 			session.close();
-		}
-//		session.persist(invoice);
-//		return true;
+		}*/
+		Session session = this.sessionFactory.getCurrentSession();
+		session.persist(invoice);
+		return true;
 	}
 
-/*	public boolean updateInvoice(Invoice invoice) {
+	public boolean updateInvoice(Invoice invoice) {
 		Session session = this.sessionFactory.getCurrentSession();
 		try {
 			session.update(invoice);
@@ -85,7 +86,7 @@ public class InvoiceDAO {
 		} catch (Exception e) {
 			return false;
 		}
-	}*/
+	}
 
 	public boolean deleteInvoice(int ivId) {
 		Session session = this.sessionFactory.getCurrentSession();

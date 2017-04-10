@@ -18,14 +18,21 @@ public class InvoiceDetailDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	@SuppressWarnings("unchecked")
 	public ArrayList<InvoiceDetail> getAllInvoiceDetail() {
 		Session session = this.sessionFactory.getCurrentSession();
 		return new ArrayList<InvoiceDetail>(session.createQuery("from InvoiceDetail").list());
 	}
 
-	public InvoiceDetail getInvoiceDetail(int ivId, int proId) {
+	@SuppressWarnings("unchecked")
+	public InvoiceDetail getInvoiceDetail(long ivId, long proId) {
 		Session session = this.sessionFactory.getCurrentSession();
-		return (InvoiceDetail) session.get(InvoiceDetail.class, new Integer(ivId));
+		ArrayList<InvoiceDetail> lst = new ArrayList<InvoiceDetail>(session.createQuery("from InvoiceDetail where ivId =:id").setParameter("id", ivId).list());
+		for (InvoiceDetail invoiceDetail : lst) {
+			if(invoiceDetail.getProId()==proId)
+				return invoiceDetail;
+		}
+		return null;
 	}
 
 	public InvoiceDetail addInvoiceDetail(InvoiceDetail invoiceDetail) {
@@ -60,6 +67,7 @@ public class InvoiceDetailDAO {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<InvoiceDetail> getInvoiceDetailByIvID(long ivId) {
 		Session session = this.sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(InvoiceDetail.class);
@@ -68,6 +76,7 @@ public class InvoiceDetailDAO {
 		return details;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<InvoiceDetail> getInvoiceDetailByProId(long proId) {
 		Session session = this.sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(InvoiceDetail.class);
@@ -76,6 +85,7 @@ public class InvoiceDetailDAO {
 		return details;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<InvoiceDetail> getInvoiceDetailByCreateDate(Date createDate) {
 		Session session = this.sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(InvoiceDetail.class);

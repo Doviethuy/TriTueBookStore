@@ -25,7 +25,7 @@
 							<tbody></tbody>
 						</table>
 					</div>
-					<button id="btn">Modal hóa đơn</button>
+					<button id="btn">Thêm hóa đơn</button>
 				</div>
 		</div>
 		<div class="col-md-12 col-sm-12 col-xs-12">

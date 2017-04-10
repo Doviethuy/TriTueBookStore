@@ -3,16 +3,13 @@ package com.aptech.controller;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,7 +39,7 @@ public class StaffController {
 	InvoiceDetailService invoiceDetailService;
 
 	@RequestMapping("/staff/ban-hang")
-	public String index(Model model, HttpServletRequest request) {
+	public String index(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		if (PermissionUtil.checkLogin(session)) {
 			ArrayList<Product> lstProduct = productService.getAllProduct();
@@ -56,42 +53,26 @@ public class StaffController {
 	}
 
 	@RequestMapping(value = "/staff/add-invoice", method = RequestMethod.POST)
-	public String addInvoice(HttpServletRequest request, HttpServletResponse response) throws ParseException, ServletException {
+	public String addInvoice(HttpServletRequest request) throws ParseException, ServletException {
 		HttpSession session = request.getSession();
 		if (PermissionUtil.checkLogin(session)) {
 			String redirect = GetterUtil.getString(request.getParameter("redirect").toString(), StringPool.BLANK);
 			Long total = GetterUtil.getLong(request.getParameter("total").toString());
 			String userName = session.getAttribute(Constant.USERNAME).toString();
-			
-			Invoice invoice = new Invoice();
-			invoice.setAmount(total);
-			invoice.setCreateDate(new Date());
-			invoice.setModifyDate(new Date());
-			invoice.setUsername(userName);
-			
-			Long ivId ;
-//			ArrayList<Invoice> lstInvoice = invoiceService.getAllInvoice();
-//			try {
-//				Invoice invoiceLast = lstInvoice.get(lstInvoice.size()-1);			
-//				ivId = invoiceLast.getIvId();
-//			} catch (Exception e) {
-//				// TODO: handle exception
-//			}
-			ivId = new Long(0);
-//			
-			List<InvoiceDetail> invoiceDetails = new ArrayList<>();
 			int arrLength = GetterUtil.getInteger(request.getParameter("arrLength").toString());
+			
+			Invoice invoice = new Invoice(total,new Date(),new Date(),userName);
+			invoiceService.addInvoice(invoice);
+			
+			ArrayList<Invoice> lstInvoice = invoiceService.getAllInvoice();
+			long ivId = lstInvoice.get(lstInvoice.size()-1).getIvId();				
 			for (int i = 0; i < arrLength; i++) {
 				long proId = GetterUtil.getLong(request.getParameter("id"+(i+1)).toString());
 				int proQty = GetterUtil.getInteger(request.getParameter("qty"+(i+1)).toString());
 				long price = productService.getProduct(proId).getPrice();
-				InvoiceDetail invoiceDetail = new InvoiceDetail(ivId, proId, proQty, proQty*price, new Date());
-				invoiceDetails.add(invoiceDetail);
-//				invoiceDetailService.addInvoiceDetail(invoiceDetail);
+				invoiceDetailService.addInvoiceDetail(new InvoiceDetail(ivId, proId, proQty, proQty*price, new Date()));
 			}
 			
-			invoice.setInvoiceDetails(invoiceDetails);
-			invoiceService.addInvoice(invoice);
 			return "redirect:" + redirect;
 		} else {
 			return "redirect:/";
@@ -99,26 +80,30 @@ public class StaffController {
 	}
 
 	@RequestMapping(value = "/staff/edit-invoice", method = RequestMethod.POST)
-	public String editInvoice(HttpServletRequest request, HttpServletResponse response) throws ParseException, ServletException {
+	public String editInvoice(HttpServletRequest request) throws ParseException, ServletException {
 		HttpSession session = request.getSession();
 		if (PermissionUtil.checkLogin(session)) {
 			String redirect = GetterUtil.getString(request.getParameter("redirect").toString(), StringPool.BLANK);
 			long ivId = GetterUtil.getLong(request.getParameter("ivId").toString());
-			Invoice invoice = invoiceService.getInvoice(ivId);			
-			List<InvoiceDetail> invoiceDetails = new ArrayList<>();
+			Invoice invoice = invoiceService.getInvoice(ivId);	
 			int arrLength = GetterUtil.getInteger(request.getParameter("arrLength").toString());
 			long newTotal = 0;
+			
 			for (int i = 0; i < arrLength; i++) {
 				long proId = GetterUtil.getLong(request.getParameter("id"+(i+1)).toString());
 				int proQty = GetterUtil.getInteger(request.getParameter("qty"+(i+1)).toString());
 				long price = productService.getProduct(proId).getPrice();
-				newTotal+=proQty*price;
-				if(proQty!=0)
-					invoiceDetails.add(new InvoiceDetail(ivId, proId, proQty, proQty*price, new Date()));
+				newTotal+=proQty*price;				
+				if(proQty>0){
+					InvoiceDetail detail = invoiceDetailService.getInvoiceDetail(ivId, proId);
+					detail.setQuantity(proQty);
+					detail.setAmount(proQty*price);
+					invoiceDetailService.updateInvoiceDetail(detail);
+				}
+					
 			}
 			invoice.setAmount(newTotal);
 			invoice.setModifyDate(new Date());
-			invoice.setInvoiceDetails(invoiceDetails);
 			invoiceService.updateInvoice(invoice);
 			return "redirect:" + redirect;
 		} else {
@@ -126,33 +111,24 @@ public class StaffController {
 		}
 	}
 
-	@RequestMapping(value = "/staff/find-invoice", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = "/staff/find-invoice")
 	@ResponseBody
-	public void getInvoiceById(HttpServletRequest request) {
+	public ArrayList<InvoiceDetail> getInvoiceById(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		if (PermissionUtil.checkLogin(session)) {
-			Invoice invoice = invoiceService.getInvoice(GetterUtil.getLong(request.getParameter("id"), 0L));
-			session.setAttribute("lstInvoiceDetail", invoice.getInvoiceDetails());
-			session.setAttribute("ivId", invoice.getIvId());
-			ArrayList<Product> lstProduct = productService.getAllProduct();
-			request.setAttribute("lstPro", lstProduct);
-			ArrayList<Category> lstCategory = categoryService.getAllCategory();
-			request.setAttribute("lstCate", lstCategory);
+			long ivId = GetterUtil.getLong(request.getParameter("id").toString());
+			ArrayList<InvoiceDetail> lstInvoiceDetail = new ArrayList<InvoiceDetail>();
+			for (InvoiceDetail invoiceDetail : invoiceDetailService.getAllInvoiceDetail()) {
+				if(invoiceDetail.getIvId()==ivId)
+					lstInvoiceDetail.add(invoiceDetail);
+			}
+			return lstInvoiceDetail;
 		}
-	}
-		
-	@RequestMapping("/staff/san-pham")
-	public String staffProduct(Model model, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		if (PermissionUtil.checkLogin(session)) {
-			return "redirect:/view-hang-hoa";
-		} else {
-			return "redirect:/";
-		}
+		return null;
 	}
 	
 	@RequestMapping("/staff/hoa-don")
-	public String staffInvoice(Model model, HttpServletRequest request) {
+	public String staffInvoice(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		if (PermissionUtil.checkLogin(session)) {
 			ArrayList<Invoice> lstInvoice = invoiceService.getAllInvoice();
@@ -163,5 +139,18 @@ public class StaffController {
 		}
 	}
 	
+	@RequestMapping("/staff/san-pham")
+	public String staffProduct(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (PermissionUtil.checkLogin(session)) {
+			ArrayList<Product> lstProduct = productService.getAllProduct();
+			request.setAttribute("lstPro", lstProduct);
+			ArrayList<Category> lstCategory = categoryService.getAllCategory();
+			request.setAttribute("lstCate", lstCategory);
+			return "staff/view-hang-hoa";
+		} else {
+			return "redirect:/";
+		}
+	}
 	
 }

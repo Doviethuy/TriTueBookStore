@@ -89,7 +89,7 @@
 $(document).ready(function(){
 	var chart_plot_namtbb_data = [];
 	for (var i = 0; i < 30; i++) {
-	  chart_plot_namtbb_data.push([new Date(Date.today().add(i).days()).getTime(), randNum() + i + i + 10]);
+	  chart_plot_namtbb_data.push([new Date(Date.today().add(i).days()).getTime(), ${invoices.get(i).amount}]);
 	}
 	console.log(chart_plot_namtbb_data);
 	var chart_plot_namtbb_settings = {

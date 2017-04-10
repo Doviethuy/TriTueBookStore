@@ -22,7 +22,7 @@ public class InvoiceDetailService {
 	}
 
 	@Transactional
-	public InvoiceDetail getInvoiceDetail(int ivId, int proId) {
+	public InvoiceDetail getInvoiceDetail(long ivId, long proId) {
 		return invoiceDetailDAO.getInvoiceDetail(ivId, proId);
 	}
 
@@ -31,10 +31,10 @@ public class InvoiceDetailService {
 		return invoiceDetailDAO.addInvoiceDetail(invoiceDetail);
 	}
 
-	// @Transactional
-	// public boolean updateInvoiceDetail(InvoiceDetail invoiceDetail) {
-	// return invoiceDetailDAO.updateInvoiceDetail(invoiceDetail);
-	// }
+	@Transactional
+	public boolean updateInvoiceDetail(InvoiceDetail invoiceDetail) {
+		return invoiceDetailDAO.updateInvoiceDetail(invoiceDetail);
+	}
 
 	@Transactional
 	public boolean deleteInvoiceDetail(int ivId, int proId) {

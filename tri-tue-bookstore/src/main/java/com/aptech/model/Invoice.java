@@ -35,6 +35,14 @@ public class Invoice {
 
 	public Invoice() {
 	}
+	
+	public Invoice(long amount, Date createDate, Date modifyDate, String username) {
+		super();
+		this.amount = amount;
+		this.createDate = createDate;
+		this.modifyDate = modifyDate;
+		this.username = username;
+	}
 
 	public Invoice(long ivId, long amount, Date createDate, Date modifyDate, String username) {
 		super();

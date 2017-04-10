@@ -3,57 +3,12 @@
 <%@ include file="../init.jsp"%>
 <%@include file="include/header.jsp"%>
 <%@include file="include/sidebar.jsp"%>
-<div class="right_col" role="main">
-	<div class="row">
-		<div class="col-md-6 col-sm-6 col-xs-12">
-			<div class="x_panel">
-				<div class="x_title">
-					<h2>
-						<i class="fa fa-square-o"></i> Modals
-					</h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-expanded="false"><i
-								class="fa fa-wrench"></i></a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">Settings 1</a></li>
-								<li><a href="#">Settings 2</a></li>
-							</ul></li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-
-					<!-- modals -->
-					<!-- Large modal -->
-										
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="right_col" role="main">	
 	<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
 					<div class="x_title">
-						<h2>
-							Default Example <small>Users</small>
-						</h2>
-						<ul class="nav navbar-right panel_toolbox">
-							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-							</li>
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-expanded="false"><i
-									class="fa fa-wrench"></i></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="#">Settings 1</a></li>
-									<li><a href="#">Settings 2</a></li>
-								</ul></li>
-							<li><a class="close-link"><i class="fa fa-close"></i></a></li>
-						</ul>
-						<div class="clearfix"></div>
+						<h2>Chi tiết hóa đơn</h2><div class="clearfix"></div>
 					</div>
 					<div class="x_content">
 						<%@ include file="include/add-invoice-modal.jsp" %>
@@ -68,8 +23,6 @@
 									<th>Chi tiết</th>
 								</tr>
 							</thead>
-
-
 							<tbody>
 								<c:forEach var="item" items="${lstInv}">
 								<tr>
@@ -102,7 +55,13 @@
 			data : {
 				id : ivId,
 			},
-			success : function() {
+			success : function(lst) {
+				$("#tblDetail tbody").empty();
+				$.each(lst, function(i) {
+					var cDate = new Date(lst[i].createDate);
+					var strDate = cDate.getDate()+'/'+(cDate.getMonth()+1)+'/'+cDate.getFullYear();
+			        $('#tblDetail tbody').append('<tr><td>'+lst[i].ivId+'</td><td>'+lst[i].proId+'</td><td>'+(lst[i].amount/lst[i].quantity)+'</td><td contenteditable="true">'+lst[i].quantity+'</td><td>'+strDate+'</td></tr>');
+			    });
 				$("#invoiceDetail").modal("show");
 			}
 		});

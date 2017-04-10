@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.aptech.model.Category;
+import com.aptech.model.Invoice;
 import com.aptech.model.Product;
 import com.aptech.model.User;
 import com.aptech.service.CategoryService;
@@ -54,6 +55,8 @@ public class AdminController {
 			if (PermissionUtil.checkAdminRole(session)) {
 				ArrayList<User> allUser = userService.getAllUser();
 				request.setAttribute("users", allUser);
+				ArrayList<Invoice> allInvoice = invoiceService.getAllInvoice();
+				request.setAttribute("invoices", allInvoice);
 				return "admin/view-quan-ly";
 			} else {
 				return "redirect:/";
@@ -246,17 +249,16 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/admin/edit-category", method = RequestMethod.POST)
-	public String editCategory(HttpServletRequest request, HttpServletResponse response)
-			throws ParseException, ServletException {
+	public String editCategory(HttpServletRequest request) throws ParseException, ServletException {
 		HttpSession session = request.getSession();
 		if (PermissionUtil.checkLogin(session)) {
 			if (PermissionUtil.checkAdminRole(session)) {
-				int cateId = GetterUtil.getInteger(request.getParameter("cateIdHidden").toString());
+				int cateId = GetterUtil.getInteger(request.getParameter("cateId").toString(),0);
 				String redirect = GetterUtil.getString(request.getParameter("redirect").toString(), StringPool.BLANK);
-				String cateName = GetterUtil.getString(request.getParameter("proName").toString(), StringPool.BLANK);
-				Category item = categoryService.getCategory(cateId);
-				item.setCateName(cateName);
-				categoryService.updateCategory(item);
+				String cateName = GetterUtil.getString(request.getParameter("cateName").toString(), StringPool.BLANK);
+				Category category = categoryService.getCategory(cateId);
+				category.setCateName(cateName);
+				categoryService.updateCategory(category);
 				return "redirect:" + redirect;
 			} else {
 				return "redirect:/";
@@ -270,17 +272,17 @@ public class AdminController {
 	@ResponseBody
 	public Category getCategoryById(HttpServletRequest request) {
 		HttpSession session = request.getSession();
+		Category category = null;
 		if (PermissionUtil.checkLogin(session)) {
 			if (PermissionUtil.checkAdminRole(session)) {
-				int cateId = GetterUtil.getInteger(request.getParameter("id"), 0);
-				Category category = null;
+				int cateId = GetterUtil.getInteger(request.getParameter("id").toString(),0);				
 				if (cateId != 0) {
 					category = categoryService.getCategory(cateId);
 				}
 				return category;
 			}
 		}
-		return null;
+		return category;
 	}
 
 	@RequestMapping(value = "/admin/add-product", method = RequestMethod.POST)
