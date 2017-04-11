@@ -33,7 +33,7 @@
 								<td></td>
 								<td></td>
 								<td></td>
-								<td id="cal" style="background-color: buttonface">CỘNG TIỀN HÀNG</td>
+								<td onclick="calClick()" style="background-color: buttonface">CỘNG TIỀN HÀNG</td>
 								<td><input type="text" readonly name="total" id="total" style="color: red;border:none"/></td>
 							</tr>
 						</tfoot>
@@ -52,21 +52,22 @@
 </div>
 <script src="${ctxPath}/resources/static/vendors/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript">
-$('#cal').click(function(){
-	var total = 0;
-	$("#total").empty();	
-	$('#datatable3 tbody tr').each(function(){
-		$(this).find('td:last').remove();
-		$(this).find('td:eq(6)').attr("contentEditable","true");
-		var qty = parseInt($(this).find('td:eq(6)').text());
-		var pr = parseFloat($(this).find('td:eq(5)').text());
-		total+=qty*pr;
-		$(this).append('<td>'+qty*pr+'</td>');
-	});
-	$('#total').val(total);
-});
+	function calClick(){
+		var total = 0;
+		$("#total").empty();	
+		$('#datatable3 tbody tr').each(function(){
+			$(this).find('td:last').remove();
+			$(this).find('td:eq(6)').attr("contentEditable","true");
+			var qty = parseInt($(this).find('td:eq(6)').text());
+			var pr = parseFloat($(this).find('td:eq(5)').text());
+			total+=qty*pr;
+			$(this).append('<td>'+qty*pr+'</td>');
+		});
+		$('#total').val(total);
+	}
 $('#frm').submit(function(e){
     e.preventDefault();
+    calClick();
     var proId = [];
     var proQty = [];
     $('#datatable3 tbody tr').each(function(){
