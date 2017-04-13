@@ -21,15 +21,18 @@ public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(@RequestParam("userName") String userName, @RequestParam("password") String password, HttpServletRequest request) {
+		HttpSession session = request.getSession();
 		User user = userService.getUser(userName);
 		if (user != null) {
 			if (user.getPassword().equals(password)) {
-				HttpSession session = request.getSession();
 				session.setAttribute(Constant.USERNAME, user.getUserName());
 				session.setAttribute(Constant.FULLNAME, user.getName());
 				session.setAttribute(Constant.AVARTAR, user.getImg());
 				session.setAttribute(Constant.ROLE, user.getRole());
-			}
+				session.setAttribute(Constant.LOGIN_SUCCESS, Constant.LOGIN_SUCCESS);
+			} 
+		}else {
+			session.setAttribute(Constant.LOGIN_FAIL, Constant.LOGIN_FAIL);
 		}
 		return "redirect:/";
 	}

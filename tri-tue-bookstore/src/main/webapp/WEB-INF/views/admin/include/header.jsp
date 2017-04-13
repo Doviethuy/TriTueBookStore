@@ -47,10 +47,20 @@
 <link
 	href="${ctxPath}/resources/static/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css"
 	rel="stylesheet">
-
+<!-- PNotify -->
+    <link href="${ctxPath}/resources/static/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="${ctxPath}/resources/static/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="${ctxPath}/resources/static/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+   
 <!-- Custom Theme Style -->
 <link href="${ctxPath}/resources/static/build/css/custom.min.css"
 	rel="stylesheet">
+	<style type="text/css">
+		.btn-default.active{
+			background-color: #337ab7;
+			color: white;
+		}
+	</style>
 </head>
 
 <body class="nav-md">
@@ -60,7 +70,7 @@
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
 						<a href="${ctxPath}" class="site_title"><i class="fa fa-paw"></i>
-							<span>Gentelella Alela!</span></a>
+							<span>Trí Tuệ Việt!</span></a>
 					</div>
 
 					<div class="clearfix"></div>

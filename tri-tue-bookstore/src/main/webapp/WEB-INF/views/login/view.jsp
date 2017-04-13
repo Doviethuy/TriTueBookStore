@@ -10,7 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Nhà sách Trí Tuệ</title>
-
+	 <!-- jQuery -->
+    <script src="${ctxPath}/resources/static/vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
     <link href="${ctxPath}/resources/static/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -19,7 +20,14 @@
     <link href="${ctxPath}/resources/static/vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- Animate.css -->
     <link href="${ctxPath}/resources/static/vendors/animate.css/animate.min.css" rel="stylesheet">
-
+<!-- PNotify -->
+    <link href="${ctxPath}/resources/static/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="${ctxPath}/resources/static/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="${ctxPath}/resources/static/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+    <!-- PNotify -->
+    <script src="${ctxPath}/resources/static/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="${ctxPath}/resources/static/vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="${ctxPath}/resources/static/vendors/pnotify/dist/pnotify.nonblock.js"></script>
     <!-- Custom Theme Style -->
     <link href="${ctxPath}/resources/static/build/css/custom.min.css" rel="stylesheet">
   </head>
@@ -61,5 +69,20 @@
         </div>
       </div>
     </div>
+    <%try{%>
+<c:if test="<%=session.getAttribute(Constant.LOGIN_FAIL).toString().equals(Constant.LOGIN_FAIL) %>">
+	<script>
+		$(document).ready(function(){
+			new PNotify({
+                title: 'Thất bại!',
+                text: 'Sai tên tài khoản hoặc mật khẩu.',
+                type: 'error',
+                styling: 'bootstrap3'
+            });
+		});		
+	</script>
+	<%session.removeAttribute(Constant.LOGIN_FAIL); %>
+</c:if>
+<%}catch(Exception e){}%>
   </body>
 </html>

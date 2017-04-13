@@ -23,8 +23,10 @@ public class HomeController {
 		if (PermissionUtil.checkLogin(session)) {
 			byte role = Byte.valueOf(session.getAttribute(Constant.ROLE).toString());
 			if (role == Constant.ADMIN_ROLE) {
+				session.setAttribute(Constant.LOGIN_SUCCESS, Constant.LOGIN_SUCCESS);
 				return "redirect:/admin/report/doanh-thu";
 			} else if (role == Constant.STAFF_ROLE) {
+				session.setAttribute(Constant.LOGIN_SUCCESS, Constant.LOGIN_SUCCESS);
 				return "redirect:/staff/ban-hang";	
 			} else {
 				return "login/view";

@@ -18,8 +18,7 @@
     <script src="${ctxPath}/resources/static/vendors/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
     <script src="${ctxPath}/resources/static/vendors/nprogress/nprogress.js"></script>
-    <!-- iCheck -->
-    <script src="${ctxPath}/resources/static/vendors/iCheck/icheck.min.js"></script>
+   
     <!-- Datatables -->
     <script src="${ctxPath}/resources/static/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="${ctxPath}/resources/static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -36,9 +35,11 @@
     <script src="${ctxPath}/resources/static/vendors/jszip/dist/jszip.min.js"></script>
     <script src="${ctxPath}/resources/static/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="${ctxPath}/resources/static/vendors/pdfmake/build/vfs_fonts.js"></script>
-
+<!-- PNotify -->
+    <script src="${ctxPath}/resources/static/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="${ctxPath}/resources/static/vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="${ctxPath}/resources/static/vendors/pnotify/dist/pnotify.nonblock.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="${ctxPath}/resources/static/build/js/custom.min.js"></script>
-
   </body>
 </html>

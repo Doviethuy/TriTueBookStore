@@ -82,3 +82,54 @@
 </script>
 
 <%@ include file="include/footer.jsp"%>
+<%try{%>
+<c:if test="<%=session.getAttribute(Constant.ADD_CATEGORY_SUCCESS).toString().equals(Constant.ADD_CATEGORY_SUCCESS) %>">
+	<script>
+		show_notify();
+		
+		function show_notify(){
+			new PNotify({
+	               title: 'Thành công',
+	               text: 'Thêm danh mục thành công!',
+	               type: 'success',
+	               styling: 'bootstrap3'
+	           });
+		}
+	</script>
+	<%session.removeAttribute(Constant.ADD_CATEGORY_SUCCESS); %>
+</c:if>
+<%}catch(Exception e){}%>
+<%try{%>
+<c:if test="<%=session.getAttribute(Constant.EDIT_CATEGORY_SUCCESS).toString().equals(Constant.EDIT_CATEGORY_SUCCESS) %>">
+	<script>
+		show_notify();
+		
+		function show_notify(){
+			new PNotify({
+	               title: 'Thành công',
+	               text: 'Chỉnh sửa danh mục thành công!',
+	               type: 'success',
+	               styling: 'bootstrap3'
+	           });
+		}
+	</script>
+	<%session.removeAttribute(Constant.EDIT_CATEGORY_SUCCESS); %>
+</c:if>
+<%}catch(Exception e){}%>
+<%try{%>
+<c:if test="<%=session.getAttribute(Constant.DELETE_CATEGORY_SUCCESS).toString().equals(Constant.DELETE_CATEGORY_SUCCESS) %>">
+	<script>
+		show_notify();
+		
+		function show_notify(){
+			new PNotify({
+	               title: 'Thành công',
+	               text: 'Xoá danh mục thành công!',
+	               type: 'success',
+	               styling: 'bootstrap3'
+	           });
+		}
+	</script>
+	<%session.removeAttribute(Constant.DELETE_CATEGORY_SUCCESS); %>
+</c:if>
+<%}catch(Exception e){}%>

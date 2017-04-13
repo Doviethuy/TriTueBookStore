@@ -100,3 +100,54 @@
 </script>
 
 <%@ include file="include/footer.jsp"%>
+<%try{%>
+<c:if test="<%=session.getAttribute(Constant.ADD_PRODUCT_SUCCESS).toString().equals(Constant.ADD_PRODUCT_SUCCESS) %>">
+	<script>
+		show_notify();
+		
+		function show_notify(){
+			new PNotify({
+	               title: 'Thành công',
+	               text: 'Thêm sản phẩm thành công!',
+	               type: 'success',
+	               styling: 'bootstrap3'
+	           });
+		}
+	</script>
+	<%session.removeAttribute(Constant.ADD_PRODUCT_SUCCESS); %>
+</c:if>
+<%}catch(Exception e){}%>
+<%try{%>
+<c:if test="<%=session.getAttribute(Constant.EDIT_PRODUCT_SUCCESS).toString().equals(Constant.EDIT_PRODUCT_SUCCESS) %>">
+	<script>
+		show_notify();
+		
+		function show_notify(){
+			new PNotify({
+	               title: 'Thành công',
+	               text: 'Chỉnh sửa sản phẩm thành công!',
+	               type: 'success',
+	               styling: 'bootstrap3'
+	           });
+		}
+	</script>
+	<%session.removeAttribute(Constant.EDIT_PRODUCT_SUCCESS); %>
+</c:if>
+<%}catch(Exception e){}%>
+<%try{%>
+<c:if test="<%=session.getAttribute(Constant.DELETE_PRODUCT_SUCCESS).toString().equals(Constant.DELETE_PRODUCT_SUCCESS) %>">
+	<script>
+		show_notify();
+		
+		function show_notify(){
+			new PNotify({
+	               title: 'Thành công',
+	               text: 'Xoá sản phẩm thành công!',
+	               type: 'success',
+	               styling: 'bootstrap3'
+	           });
+		}
+	</script>
+	<%session.removeAttribute(Constant.DELETE_PRODUCT_SUCCESS); %>
+</c:if>
+<%}catch(Exception e){}%>

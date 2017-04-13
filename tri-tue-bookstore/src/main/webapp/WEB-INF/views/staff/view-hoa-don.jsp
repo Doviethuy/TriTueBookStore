@@ -69,3 +69,20 @@
 	
 </script>
 <%@ include file="include/footer.jsp"%>
+<%try{%>
+<c:if test="<%=session.getAttribute(Constant.EDIT_INVOICE_SUCCESS).toString().equals(Constant.EDIT_INVOICE_SUCCESS) %>">
+	<script>
+		show_notify();
+		
+		function show_notify(){
+			new PNotify({
+	               title: 'Thành công',
+	               text: 'Sửa hoá đơn thành công!',
+	               type: 'success',
+	               styling: 'bootstrap3'
+	           });
+		}
+	</script>
+	<%session.removeAttribute(Constant.EDIT_INVOICE_SUCCESS); %>
+</c:if>
+<%}catch(Exception e){}%>

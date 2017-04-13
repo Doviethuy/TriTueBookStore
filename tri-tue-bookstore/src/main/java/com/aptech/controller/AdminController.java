@@ -53,8 +53,6 @@ public class AdminController {
 		HttpSession session = request.getSession();
 		if (PermissionUtil.checkLogin(session)) {
 			if (PermissionUtil.checkAdminRole(session)) {
-				ArrayList<User> allUser = userService.getAllUser();
-				request.setAttribute("users", allUser);
 				return "admin/view-quan-ly";
 			} else {
 				return "redirect:/";
@@ -63,7 +61,24 @@ public class AdminController {
 			return "redirect:/";
 		}
 	}
-
+	
+	@RequestMapping("/admin/report/get-data-report")
+	public @ResponseBody String getReportData(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (PermissionUtil.checkLogin(session)) {
+			if (PermissionUtil.checkAdminRole(session)) {
+				ArrayList<Invoice> allInvoice = invoiceService.getAllInvoice();
+				Date start = GetterUtil.getDate(request.getParameter("start").toString(), new SimpleDateFormat("dd/MM/yyyy"));
+				Date end = GetterUtil.getDate(request.getParameter("end").toString(), new SimpleDateFormat("dd/MM/yyyy"));
+				return Constant.toReportDataString(allInvoice, start, end);
+			} else {
+				return "redirect:/";
+			}
+		} else {
+			return "redirect:/";
+		}
+	}
+	
 	@RequestMapping("/admin/report/san-pham")
 	public String reportProduct(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -139,6 +154,7 @@ public class AdminController {
 				User item = new User(userName, password, name, dob, gender, address, phone, fileName, description,
 						new Date(), new Date(), role);
 				userService.addUser(item);
+				session.setAttribute(Constant.ADD_STAFF_SUCCESS, Constant.ADD_STAFF_SUCCESS);
 				return "redirect:" + redirect;
 			} else {
 				return "redirect:/";
@@ -156,6 +172,7 @@ public class AdminController {
 			if (PermissionUtil.checkAdminRole(session)) {
 				String userName = request.getParameter("userName").toString();
 				userService.deleteUser(userName);
+				session.setAttribute(Constant.DELETE_STAFF_SUCCESS, Constant.DELETE_STAFF_SUCCESS);
 			}
 		}
 	}
@@ -188,6 +205,7 @@ public class AdminController {
 				User item = new User(userName, password, name, dob, gender, address, phone, fileName, description,
 						new Date(), new Date(), role);
 				userService.updateUser(item);
+				session.setAttribute(Constant.EDIT_STAFF_SUCCESS, Constant.EDIT_STAFF_SUCCESS);
 				return "redirect:" + redirect;
 			} else {
 				return "redirect:/";
@@ -225,6 +243,7 @@ public class AdminController {
 				String cateName = GetterUtil.getString(request.getParameter("cateName").toString(), StringPool.BLANK);
 				Category item = new Category(cateName);
 				categoryService.addCategory(item);
+				session.setAttribute(Constant.ADD_CATEGORY_SUCCESS, Constant.ADD_CATEGORY_SUCCESS);
 				return "redirect:" + redirect;
 			} else {
 				return "redirect:/";
@@ -242,6 +261,7 @@ public class AdminController {
 			if (PermissionUtil.checkAdminRole(session)) {
 				int cateId = GetterUtil.getInteger(request.getParameter("cateId").toString());
 				categoryService.deleteCategory(cateId);
+				session.setAttribute(Constant.DELETE_CATEGORY_SUCCESS, Constant.DELETE_CATEGORY_SUCCESS);
 			}
 		}
 	}
@@ -252,12 +272,13 @@ public class AdminController {
 		HttpSession session = request.getSession();
 		if (PermissionUtil.checkLogin(session)) {
 			if (PermissionUtil.checkAdminRole(session)) {
-				int cateId = GetterUtil.getInteger(request.getParameter("cateIdHidden").toString());
+				int cateId = GetterUtil.getInteger(request.getParameter("cateId").toString());
 				String redirect = GetterUtil.getString(request.getParameter("redirect").toString(), StringPool.BLANK);
 				String cateName = GetterUtil.getString(request.getParameter("cateName").toString(), StringPool.BLANK);
 				Category item = categoryService.getCategory(cateId);
 				item.setCateName(cateName);
 				categoryService.updateCategory(item);
+				session.setAttribute(Constant.EDIT_CATEGORY_SUCCESS, Constant.EDIT_CATEGORY_SUCCESS);
 				return "redirect:" + redirect;
 			} else {
 				return "redirect:/";
@@ -302,6 +323,7 @@ public class AdminController {
 				Product item = new Product(proName, cateId, price, quantity, fileName, description, new Date(),
 						new Date(), userName);
 				productService.addProduct(item);
+				session.setAttribute(Constant.ADD_PRODUCT_SUCCESS, Constant.ADD_PRODUCT_SUCCESS);
 				return "redirect:" + redirect;
 			} else {
 				return "redirect:/";
@@ -319,6 +341,7 @@ public class AdminController {
 			if (PermissionUtil.checkAdminRole(session)) {
 				long proId = GetterUtil.getLong(request.getParameter("proId").toString());
 				productService.deleteProduct(proId);
+				session.setAttribute(Constant.DELETE_PRODUCT_SUCCESS, Constant.DELETE_PRODUCT_SUCCESS);
 			}
 		}
 	}
@@ -353,6 +376,7 @@ public class AdminController {
 				item.setDescription(description);
 				item.setUserName(userName);
 				productService.updateProduct(item);
+				session.setAttribute(Constant.EDIT_PRODUCT_SUCCESS, Constant.EDIT_PRODUCT_SUCCESS);
 				return "redirect:" + redirect;
 			} else {
 				return "redirect:/";

@@ -22,10 +22,6 @@
 <!-- NProgress -->
 <link href="${ctxPath}/resources/static/vendors/nprogress/nprogress.css"
 	rel="stylesheet">
-<!-- iCheck -->
-<link
-	href="${ctxPath}/resources/static/vendors/iCheck/skins/flat/green.css"
-	rel="stylesheet">
 <!-- Datatables -->
 <link
 	href="${ctxPath}/resources/static/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css"
@@ -42,6 +38,10 @@
 <link
 	href="${ctxPath}/resources/static/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css"
 	rel="stylesheet">
+<!-- PNotify -->
+    <link href="${ctxPath}/resources/static/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="${ctxPath}/resources/static/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="${ctxPath}/resources/static/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
 
 <!-- Custom Theme Style -->
 <link href="${ctxPath}/resources/static/build/css/custom.min.css"

@@ -2,7 +2,7 @@
 <!-- footer content -->
 <footer>
 	<div class="pull-right">
-		Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+		Phần mềm quản lý nhà sách Trí Tuệ
 	</div>
 	<div class="clearfix"></div>
 </footer>
@@ -62,6 +62,10 @@
 <script src="${ctxPath}/resources/static/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
 <script src="${ctxPath}/resources/static/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 <script src="${ctxPath}/resources/static/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+  <!-- PNotify -->
+    <script src="${ctxPath}/resources/static/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="${ctxPath}/resources/static/vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="${ctxPath}/resources/static/vendors/pnotify/dist/pnotify.nonblock.js"></script>
  <!-- Parsley -->
     <script src="${ctxPath}/resources/static/vendors/parsleyjs/dist/parsley.min.js"></script>
 

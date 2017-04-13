@@ -105,3 +105,37 @@
 	});
 </script>
 <%@ include file="include/footer.jsp"%>
+<%try{%>
+<c:if test="<%=session.getAttribute(Constant.ADD_INVOICE_SUCCESS).toString().equals(Constant.ADD_INVOICE_SUCCESS) %>">
+	<script>
+		show_notify();
+		
+		function show_notify(){
+			new PNotify({
+	               title: 'Thành công',
+	               text: 'Thêm hoá đơn thành công!',
+	               type: 'success',
+	               styling: 'bootstrap3'
+	           });
+		}
+	</script>
+	<%session.removeAttribute(Constant.ADD_INVOICE_SUCCESS); %>
+</c:if>
+<%}catch(Exception e){}%>
+<%try{%>
+<c:if test="<%=session.getAttribute(Constant.LOGIN_SUCCESS).toString().equals(Constant.LOGIN_SUCCESS) %>">
+	<script>
+		show_notify();
+		
+		function show_notify(){
+			new PNotify({
+	               title: 'Thành công',
+	               text: 'Đăng nhập thành công!',
+	               type: 'success',
+	               styling: 'bootstrap3'
+	           });
+		}
+	</script>
+	<%session.removeAttribute(Constant.LOGIN_SUCCESS); %>
+</c:if>
+<%}catch(Exception e){}%>

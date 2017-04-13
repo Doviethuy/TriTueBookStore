@@ -8,3 +8,5 @@
 	request.setAttribute("fullName", session.getAttribute(Constant.FULLNAME));
 	request.setAttribute("avartar", session.getAttribute(Constant.AVARTAR));
 %>
+
+

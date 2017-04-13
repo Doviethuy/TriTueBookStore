@@ -2551,8 +2551,13 @@ if (typeof NProgress != 'undefined') {
 				}();
 
 				$('#datatable').dataTable({
-					//"ajax": '../ajax/data/arrays.txt'
-					//json data
+					"language": {
+			    	    "lengthMenu": "Số kết quả trên trang _MENU_",
+			    	    "zeroRecords": "Không có kết quả nào",
+			    	    "emptyTable": "Không có dữ liệu để hiển thị",
+			    	    "processing": "Đang xử lý...",
+			    	    "loadingRecords": "Đang tải..."			    	      	    
+			    	}
 				});
 
 				$('#datatable-keytable').DataTable({

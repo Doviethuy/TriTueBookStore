@@ -36,7 +36,7 @@
 										<td>${product.price}</td>									
 										<td>${product.quantity}</td>	
 										<td>${product.description}</td>
-										<td><img src="/data/${avartar}" alt=""></td>										
+										<td><img src="/data/${product.img}" style="max-width: 30px;" alt=""></td>										
 									</tr>
 								</c:forEach>								
 							</tbody>

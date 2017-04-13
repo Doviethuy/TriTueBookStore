@@ -72,7 +72,7 @@ public class StaffController {
 				long price = productService.getProduct(proId).getPrice();
 				invoiceDetailService.addInvoiceDetail(new InvoiceDetail(ivId, proId, proQty, proQty*price, new Date()));
 			}
-			
+			session.setAttribute(Constant.ADD_INVOICE_SUCCESS, Constant.ADD_INVOICE_SUCCESS);
 			return "redirect:" + redirect;
 		} else {
 			return "redirect:/";
@@ -105,6 +105,7 @@ public class StaffController {
 			invoice.setAmount(newTotal);
 			invoice.setModifyDate(new Date());
 			invoiceService.updateInvoice(invoice);
+			session.setAttribute(Constant.EDIT_INVOICE_SUCCESS, Constant.EDIT_INVOICE_SUCCESS);
 			return "redirect:" + redirect;
 		} else {
 			return "redirect:/";

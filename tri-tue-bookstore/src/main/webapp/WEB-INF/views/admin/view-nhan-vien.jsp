@@ -35,7 +35,10 @@
 									<td>${item.phone}</td>
 									<td>${item.dob}</td>
 									<td>${item.createDate}</td>
-									<td>${item.role}</td>
+									<td>
+										<c:if test="${item.role == 1}">Quản lý</c:if>
+										<c:if test="${item.role == 0}">Nhân viên</c:if>
+									</td>
 									<td>
 										<div class="btn-action-table">
 											<label onclick="showEditUserModal('${item.userName}')"><i
@@ -108,3 +111,54 @@
 	}
 </script>
 <%@ include file="include/footer.jsp"%>
+<%try{%>
+<c:if test="<%=session.getAttribute(Constant.ADD_STAFF_SUCCESS).toString().equals(Constant.ADD_STAFF_SUCCESS) %>">
+	<script>
+		show_notify();
+		
+		function show_notify(){
+			new PNotify({
+	               title: 'Thành công',
+	               text: 'Thêm nhân viên thành công!',
+	               type: 'success',
+	               styling: 'bootstrap3'
+	           });
+		}
+	</script>
+	<%session.removeAttribute(Constant.ADD_STAFF_SUCCESS); %>
+</c:if>
+<%}catch(Exception e){}%>
+<%try{%>
+<c:if test="<%=session.getAttribute(Constant.EDIT_STAFF_SUCCESS).toString().equals(Constant.EDIT_STAFF_SUCCESS) %>">
+	<script>
+		show_notify();
+		
+		function show_notify(){
+			new PNotify({
+	               title: 'Thành công',
+	               text: 'Chỉnh sửa nhân viên thành công!',
+	               type: 'success',
+	               styling: 'bootstrap3'
+	           });
+		}
+	</script>
+	<%session.removeAttribute(Constant.EDIT_STAFF_SUCCESS); %>
+</c:if>
+<%}catch(Exception e){}%>
+<%try{%>
+<c:if test="<%=session.getAttribute(Constant.DELETE_STAFF_SUCCESS).toString().equals(Constant.DELETE_STAFF_SUCCESS) %>">
+	<script>
+		show_notify();
+		
+		function show_notify(){
+			new PNotify({
+	               title: 'Thành công',
+	               text: 'Xoá nhân viên thành công!',
+	               type: 'success',
+	               styling: 'bootstrap3'
+	           });
+		}
+	</script>
+	<%session.removeAttribute(Constant.DELETE_STAFF_SUCCESS); %>
+</c:if>
+<%}catch(Exception e){}%>
