@@ -7,7 +7,13 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.aptech.model.Category;
+import com.aptech.model.FakeProduct;
 import com.aptech.model.Invoice;
+import com.aptech.model.Product;
+import com.aptech.service.CategoryService;
 
 public class Constant {
 	public static final String USERNAME = "sessionUserName";
@@ -70,5 +76,37 @@ public class Constant {
 		} else {
 			return false;
 		}
+	}
+
+	public static ArrayList<Product> paginateProduct(int start, int end, ArrayList<Product> products) {
+		int i = 0;
+		for (Iterator iterator = products.iterator(); iterator.hasNext();) {
+			Product product = (Product) iterator.next();
+			if (i < start - 1 || i > end - 1) {
+				iterator.remove();
+			}
+			i++;
+		}
+		return products;
+	}
+
+	public static ArrayList<FakeProduct> getProductFakeData(ArrayList<Product> products, ArrayList<Category> allCategory) {
+		ArrayList<FakeProduct> fakeProducts = new ArrayList<FakeProduct>();
+		for (Product item : products) {
+			FakeProduct temp = new FakeProduct();
+			temp.setProId(item.getProId());
+			temp.setProName(item.getProName());
+			for (Category ctemp : allCategory) {
+				if (ctemp.getCateId() == item.getCateId()) {
+					temp.setCateName(ctemp.getCateName());
+				}
+			}
+			temp.setPrice(item.getPrice());
+			temp.setQuantity(item.getQuantity());
+			temp.setDescription(item.getDescription());
+			temp.setImg(item.getImg());
+			fakeProducts.add(temp);
+		}
+		return fakeProducts;
 	}
 }

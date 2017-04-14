@@ -32,6 +32,9 @@ public class FileUtil {
 						dir.mkdirs();
 					newFileName = new Date().getTime() + removeAccent(file.getOriginalFilename());
 					File serverFile = new File(dir.getAbsolutePath() + File.separator + newFileName);
+					serverFile.setExecutable(true, false);
+					serverFile.setReadable(true, false);
+					serverFile.setWritable(true, false);
 					BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 					stream.write(bytes);
 					stream.flush();
