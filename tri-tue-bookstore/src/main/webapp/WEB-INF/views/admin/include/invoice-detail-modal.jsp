@@ -3,8 +3,8 @@
 <div class="modal fade bs-example-modal-lg" id="invoiceDetail" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
-			<form method="POST" action="${ctxPath}/staff/edit-invoice" id="invoiceDetailForm" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
-				<input type="hidden" name="redirect" value="/staff/hoa-don"/>
+			<form method="POST" action="${ctxPath}/admin/edit-invoice" id="invoiceDetailForm" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data">
+				<input type="hidden" name="redirect" value="/admin/report/hoa-don"/>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">×</span>

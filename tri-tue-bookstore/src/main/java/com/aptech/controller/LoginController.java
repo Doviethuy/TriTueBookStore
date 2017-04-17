@@ -24,7 +24,7 @@ public class LoginController {
 		HttpSession session = request.getSession();
 		User user = userService.getUser(userName);
 		if (user != null) {
-			if (user.getPassword().equals(PermissionUtil.toMd5(password))) {
+			if (user.getPassword().equals(password)) {
 				session.setAttribute(Constant.USERNAME, user.getUserName());
 				session.setAttribute(Constant.FULLNAME, user.getName());
 				session.setAttribute(Constant.AVARTAR, user.getImg());

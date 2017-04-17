@@ -41,7 +41,7 @@ public class InvoiceService {
 	}
 
 	@Transactional
-	public List<Invoice> getInvoiceByUser(String user) {
+	public ArrayList<Invoice> getInvoiceByUser(String user) {
 		return invoiceDAO.getInvoiceByUser(user);
 	}
 	

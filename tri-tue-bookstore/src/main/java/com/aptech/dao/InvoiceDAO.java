@@ -1,6 +1,5 @@
 package com.aptech.dao;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -113,12 +112,9 @@ public class InvoiceDAO {
 		}
 	}
 
-	public List<Invoice> getInvoiceByUser(String user) {
+	public ArrayList<Invoice> getInvoiceByUser(String user) {
 		Session session = this.sessionFactory.getCurrentSession();
-		Criteria criteria = session.createCriteria(Invoice.class);
-		criteria.add(Restrictions.eq("username", user));
-		List<Invoice> invoices = criteria.list();
-		return invoices;
+		return new ArrayList<Invoice>(session.createQuery("from Invoice where username =:name").setParameter("name", user).list());
 	}
 	
 	public List<Invoice> getInvoiceByCreateDate(Date date) {

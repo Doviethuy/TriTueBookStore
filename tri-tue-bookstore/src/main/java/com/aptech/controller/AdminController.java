@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.aptech.model.Category;
 import com.aptech.model.Invoice;
+import com.aptech.model.InvoiceDetail;
 import com.aptech.model.Product;
 import com.aptech.model.User;
 import com.aptech.service.CategoryService;
@@ -110,6 +111,18 @@ public class AdminController {
 			} else {
 				return "redirect:/";
 			}
+		} else {
+			return "redirect:/";
+		}
+	}
+
+	@RequestMapping("/admin/report/hoa-don")
+	public String adminInvoice(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (PermissionUtil.checkLogin(session)) {
+			ArrayList<Invoice> lstInvoice = invoiceService.getAllInvoice();
+			request.setAttribute("lstInv", lstInvoice);
+			return "admin/view-hoa-don";
 		} else {
 			return "redirect:/";
 		}
@@ -401,6 +414,57 @@ public class AdminController {
 			}
 		}
 		return null;
+	}
+
+	@RequestMapping(value = "/admin/find-invoice")
+	@ResponseBody
+	public ArrayList<InvoiceDetail> getInvoiceById(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (PermissionUtil.checkLogin(session)) {
+			if (PermissionUtil.checkAdminRole(session)) {
+				long ivId = GetterUtil.getLong(request.getParameter("id").toString());
+				ArrayList<InvoiceDetail> lstInvoiceDetail = new ArrayList<InvoiceDetail>();
+				for (InvoiceDetail invoiceDetail : invoiceDetailService.getAllInvoiceDetail()) {
+				if (invoiceDetail.getIvId() == ivId)
+					lstInvoiceDetail.add(invoiceDetail);
+				}
+				return lstInvoiceDetail;
+			}
+		}
+		return null;
+	}
+
+	@RequestMapping(value = "/admin/edit-invoice", method = RequestMethod.POST)
+	public String editInvoice(HttpServletRequest request) throws ParseException, ServletException {
+		HttpSession session = request.getSession();
+		if (PermissionUtil.checkLogin(session)) {
+			String redirect = GetterUtil.getString(request.getParameter("redirect").toString(), StringPool.BLANK);
+			long ivId = GetterUtil.getLong(request.getParameter("ivId").toString());
+			Invoice invoice = invoiceService.getInvoice(ivId);
+			int arrLength = GetterUtil.getInteger(request.getParameter("arrLength").toString());
+			long newTotal = 0;
+
+			for (int i = 0; i < arrLength; i++) {
+				long proId = GetterUtil.getLong(request.getParameter("id" + (i + 1)).toString());
+				int proQty = GetterUtil.getInteger(request.getParameter("qty" + (i + 1)).toString());
+				long price = productService.getProduct(proId).getPrice();
+				newTotal += proQty * price;
+				if (proQty > 0) {
+					InvoiceDetail detail = invoiceDetailService.getInvoiceDetail(ivId, proId);
+					detail.setQuantity(proQty);
+					detail.setAmount(proQty * price);
+					invoiceDetailService.updateInvoiceDetail(detail);
+				}
+
+			}
+			invoice.setAmount(newTotal);
+			invoice.setModifyDate(new Date());
+			invoiceService.updateInvoice(invoice);
+			session.setAttribute(Constant.EDIT_INVOICE_SUCCESS, Constant.EDIT_INVOICE_SUCCESS);
+			return "redirect:" + redirect;
+		} else {
+			return "redirect:/";
+		}
 	}
 
 	@RequestMapping(value="admin/autoInsert")

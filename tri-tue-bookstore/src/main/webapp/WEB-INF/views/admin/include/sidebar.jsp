@@ -12,6 +12,7 @@
 					<li><a href="${ctxPath}/admin/report/doanh-thu">Thống kê doanh thu</a></li>
 					<li><a href="${ctxPath}/admin/report/san-pham">Quản lý sản phẩm</a></li>
 					<li><a href="${ctxPath}/admin/report/danh-muc">Quản lý danh mục</a></li>
+					<li><a href="${ctxPath}/admin/report/hoa-don">Quản lý hóa đơn</a></li>
 					<li><a href="${ctxPath}/admin/nhan-vien">Quản lý nhân viên</a></li>
 				</ul></li>
 		</ul>
