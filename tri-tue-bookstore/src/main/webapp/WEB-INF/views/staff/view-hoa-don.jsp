@@ -31,7 +31,7 @@
 										<td>${item.modifyDate}</td>
 										<td>${item.username}</td>
 										<td style="background-color: orange;text-align: center">
-											<a href="${ctxPath}/staff/dat-hang/${item.ivId}">ĐẶT HÀNG</a>
+											<a href="${ctxPath}/staff/dat-hang/${item.ivId}">Chi tiết</a>
 										</td>
 									</tr>
 								</c:forEach>

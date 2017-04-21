@@ -24,7 +24,7 @@ public class LoginController {
 		HttpSession session = request.getSession();
 		User user = userService.getUser(userName);
 		if (user != null) {
-			if (user.getPassword().equals(password)) {
+			if (user.getPassword().equals(PermissionUtil.toMd5(password))) {
 				session.setAttribute(Constant.USERNAME, user.getUserName());
 				session.setAttribute(Constant.FULLNAME, user.getName());
 				session.setAttribute(Constant.AVARTAR, user.getImg());
@@ -33,7 +33,7 @@ public class LoginController {
 			} else {
 				session.setAttribute(Constant.LOGIN_FAIL, Constant.LOGIN_FAIL);
 			}
-		} else {
+		}else {
 			session.setAttribute(Constant.LOGIN_FAIL, Constant.LOGIN_FAIL);
 		}
 		return "redirect:/";

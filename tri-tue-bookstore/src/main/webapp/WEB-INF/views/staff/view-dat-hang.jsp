@@ -80,10 +80,6 @@
 							</div>
 						</div>
 						<div class="col-sm-8"><a href="${ctxPath}/staff/hoa-don" style="text-decoration: underline">Quay lại danh sách đơn hàng</a></div>
-						<div class="pull-right">
-							<button class="btn btn-default">In ra</button>
-							<button class="btn btn-primary">ĐẶT HÀNG</button>
-						</div>						
 					</div>
 				</div>
 			</div>
